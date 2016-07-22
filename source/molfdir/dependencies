@@ -1,0 +1,22 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(basis.o): paracom.inc mpidef.inc
+$(lib_program)(easyinp.o): paracom.inc 
+$(lib_program)(gmultb.o): paracom.inc mpidef.inc
+$(lib_program)(grepmat.o): paracom.inc mpidef.inc
+$(lib_program)(mfd1inp.o): paracom.inc mpidef.inc
+$(lib_program)(mfd1nrm.o): paracom.inc 
+$(lib_program)(mfd1out.o): paracom.inc mpidef.inc
+$(lib_program)(mfdsint.o): paracom.inc 
+$(lib_program)(mfdsymf.o): paracom.inc mpidef.inc
+$(lib_program)(molecul.o): paracom.inc 
+$(lib_program)(molfdat.o): paracom.inc
+$(lib_program)(molfdir.o): paracom.inc mpidef.inc
+$(lib_program)(rovlap.o): paracom.inc 
+$(lib_program)(setinda.o): paracom.inc 
+$(lib_program)(setindn.o): paracom.inc mpidef.inc
+$(lib_program)(xyztran.o): paracom.inc mpidef.inc
+

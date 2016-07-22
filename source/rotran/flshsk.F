@@ -1,0 +1,29 @@
+      SUBROUTINE FLSHSK (IRECL,NSKSIZ,NSKBUF,NBCK,LBCK,LBRCSK,CBCK)
+C
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     FLUSHES BUFFERS WITH SKELETON INTEGRALS
+C
+      INTEGER NSKSIZ,NSKBUF,IRECL
+      INTEGER NBCK(*),LBCK(NSKSIZ,NSKBUF),LBRCSK(0:*)
+      COMPLEX*16 CBCK(NSKSIZ,NSKBUF)
+C
+      INCLUDE "files.inc"
+C
+      DO JI = 1, NSKBUF
+         NB = NBCK(JI)
+         IF (NB.GT.0) THEN
+            LREC=LBRCSK(0)+1
+            WRITE(INTSKEL,REC=LREC) NB,LBRCSK(JI),
+     +                             (CBCK(IX,JI),IX=1,NB),
+     +                             (LBCK(IX,JI),IX=1,NB)
+            LBRCSK(JI)=LREC
+            LBRCSK(0)=LREC
+            NBCK(JI)=0
+          ENDIF
+      ENDDO
+C
+      CLOSE (INTSKEL,STATUS='KEEP')
+      OPEN (INTSKEL,ACCESS='DIRECT',RECL=IRECL,FILE=FNAME(16))
+C
+      END

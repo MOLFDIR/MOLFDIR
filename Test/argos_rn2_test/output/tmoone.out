@@ -1,0 +1,57 @@
+1R E L A T I V I S T I C    T R A N S F O R M A T I O N    P R O G R A M
+                                 V E R S I O N  2.4       
+
+
+
+ Rn2                                                                             
+ THIS IS TMOONE CALLING                                                          
+
+ INITIAL RUN         02/13/98      11:18:55 V : 2.5.3     
+ INTEGRAL RUN 1 EL.  02/13/98      11:18:55 V :  2.5      
+ INTEGRAL RUN 2 EL.   UNDEF.        UNDEF.  V :  UNDEF.   
+ TODAY IS            02/13/98      11:19:03
+
+
+
+ TRANSFORMATION PARAMETERS:
+
+ BREIT        F
+ ONLYBRT      F
+ IPRNT        0
+
+
+
+ ORBITAL CONFIGURATION TABLE 
+
+
+
+ MAIN GROUP IDENTIFIER     E1G  E1G  E2G  E2G  E1U  E1U  E2U  E2U 
+ SUBGROUP   IDENTIFIER     'E1G "E1G 'E2G "E2G 'E1U "E1U 'E2U "E2U
+ LARGE COMPONENT BASIS     16   16   10   10   16   16   10   10
+ SMALL COMPONENT            0    0    0    0    0    0    0    0
+ NUMBER OF CORE ORBITALS    0    0    0    0    0    0    0    0
+ NUMBER OF ACT. ORBITALS   16   16   10   10   16   16   10   10
+
+
+ VECTORS TAKEN FROM FILE MFDVECA
+
+ FILE HEADING : Rn2                                                                             
+ SCF RUN DATE : 02/13/98  
+ SCF RUN TIME : 11:19:03
+
+ FILE INFORMATION : 
+ CYCLE COUNT                              21
+ ETOTAL                     -29.31527297    
+ EPREV                      -29.31527297    
+ EMDIF                      0.0000000000E+00
+ WDIF                       0.0000000000E+00
+ TOTDIF                     0.4547473509E-12
+
+
+ THE CORE ENERGY =         6.8474203028751      
+
+
+
+  TOTAL CPU TIME: 0.3513700906920025 SECONDS
+
+  (NORMAL END OF TRANSFORMATION PROGRAM)

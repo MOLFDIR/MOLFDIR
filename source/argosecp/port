@@ -1,0 +1,264 @@
+#!/bin/sh
+#
+# script to port a columbus program to a specific machine.
+# this script runs the cmdc utility and performs blas keyword
+# substitutions on a set of files.
+#
+# **********************************************************************
+# *                         *** WARNING ***                            *
+# *                                                                    *
+# * The input files are overwritten with the modified output files.    *
+# *                                                                    *
+# * This script should only operate on replaceable source code copies. *
+# **********************************************************************
+#
+#  version date: 22-oct-91
+#  20-jul-97   : mode added (tm) 
+#  14-mar-98   : except for cray machines, availability of blas routines
+#                is assumed throughout; fortran blas sources are provided
+#                in the TOOLS/BLAS subdirectory
+#
+#  required environment variables:
+#  $COLUMBUS => directory with columbus shell scripts and executables
+#
+if [ $# -lt 3 ] ;then
+   echo  usage: $0  machine_id mode  filelist...  1>&2
+   exit 1
+fi
+machine_id=$1
+specification=$2
+shift
+shift
+echo " $machine_id $specification " 
+#
+#  create the appropriate cmdcin file and define the blas-conversion
+#  command
+#
+
+case $specification in 
+normal)
+ADDFLAGS=" " 
+;;
+parallel)
+ADDFLAGS=" 'parallel'  'loadbal' "
+;;
+direct)
+ADDFLAGS=" 'big' 'direct' "
+;;
+*)
+echo "port: mode  <> normal, parallel or direct "
+exit 10
+esac
+
+echo "s/ \\/ *flags/$ADDFLAGS \\/ flags/g" > sedscript
+
+case $machine_id in
+
+standard)	                  #"standard" library source code
+BLASX="StoDblas"  	#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+1 / activ8
+/ keywords
+  / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+#  copy and edit this block to add new machines/sites...
+GENERIC_MODEL)				# 
+BLASX="StoDblas" 		# blas conversion
+cat <<\EOF >cmdcin			# cmdc input
+/ options
+/ keywords
+'SITE' 'MACHINE_TYPE' 
+   ['OS_TYPE' 'CPU_TYPE' 'ebcdic' '$format' 
+    'real16' 'real16q' 'int64' 'pipemode']   / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+vax)					#vms vax
+BLASX="StoDblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'vax' 'argonne' '$format' 'real16' 'real16q' 'milstd1753'
+'blas2' 'blas3'   / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+sun)					#sun sparc
+BLASX="StoDblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'sun' 'argonne' 'unix' '$format' 'pipemode' 'pointer'
+'blas2' 'blas3'   / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+cray|unicos)				#xmp, ymp, cray2 unix
+BLASX="DtoSblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'int64' 'real16' 'unicos' 'unix' 'argonne' 'pointer' 
+    'cray' '$format' 'pipemode'   / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+crayinline)				#special inlining conversion
+BLASX="DtoSblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'inline' 
+'int64' 'real16' 'unicos' 'unix' 'argonne' 
+    'cray' '$format' 'pipemode' 'pointer'  / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+fujitsu_vp)				#Fujitsu VP2000
+BLASX="StoDblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'fujitsu' 'unix' '$format' 'pipemode' 'vector' 'real16' 'real16q'
+'milstd1753' 'falloc' 'blas2' 'blas3' / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+rs6000|sp2|sp1|rs6000.3.x|rs6000.4.x)		#IBM RS6000 AIX 3.2, AIX4.1, sp2
+BLASX="StoDblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'rs6000' 'wien' 'unix' '$format' 'milstd1753' 'falloc'
+'real16' 'real16q' 'blas2' 'blas3' 'pipemode'   / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+hp) # HP-UX krivan A.09.05 A 9000/735 
+BLASX="StoDblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'hp' 'wien' 'unix' '$format' 'milstd1753' 'falloc' 
+'real16' 'real16q' 'blas2' 'blas3' 'pipemode'   / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+linux)					#LINUX OPERATINGS SYS
+BLASX="StoDblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+ 'wien' 'unix' 'linux'  'milstd1753' 'falloc' '$format' 
+ 'blas2' 'blas3' 'pipemode'      / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+decalpha)                             #DEC OSF/1, 64bit integer
+BLASX="StoDblas"              #blas conversion
+cat <<\EOF > cmdcin                     #cmdc input
+/option
+/ keywords
+'decalpha' 'blas2' 'blas3' 'sun' 'unix' '$format' 'milstd1753'
+ 'int64' 'pipemode' 'wien'  'pointer' /flags
+/filenames #not used in pipemode
+EOF
+;;############################################################
+decalpha32)                               #DEC OSF/1, 32bit integer
+BLASX="StoDblas"              #blas conversion
+cat <<\EOF > cmdcin                     #cmdc input
+/option
+/ keywords
+'decalpha' 'blas2' 'blas3' 'sun' 'unix' '$format' 'milstd1753'
+'pipemode' 'wien'  'pointer' /flags
+/filenames #not used in pipemode
+EOF
+;;############################################################
+sgipower)                   #iris 6.1 32bit-integer
+BLASX="StoDblas"
+cat <<\EOF > cmdcin 
+/option
+/ keywords
+'sgipower' 'real16' 'real16q' 'sun' 'milstd1753' 'pipemode'
+ 'unix' 'wien' '$format' 'blas2' 'blas3' 'pointer'  /flags 
+/filenames #not used in pipemode
+EOF
+;;############################################################
+sgipower64)                   #iris 6.1 64bit-integer
+BLASX="StoDblas"
+cat <<\EOF > cmdcin 
+/option
+/ keywords
+'sgipower' 'real16' 'real16q' 'sun' 'milstd1753' 'pipemode'
+ 'unix' 'wien' '$format' 'blas2' 'blas3' 'pointer' 'int64' /flags 
+/filenames #not used in pipemode
+EOF
+;;############################################################
+T3D)				#cray t3d parallel nur fuer pciudg
+BLASX="DtoSblas" 		#blas conversion
+cat <<\EOF >cmdcin			#cmdc input
+/ options
+/ keywords
+'int64' 'real16' 'unicos' 'unix' 'T3D' 'nonamelist'
+ 'blas2' 'blas3' 'wien' '$format' 'pipemode' 'pointer'  / flags
+/ filenames #not used in pipemode
+EOF
+;;###########################################################
+T3E64)                                  #T3E 
+BLASX="DtoSblas"              #blas conversion
+cat <<\EOF >cmdcin                      #cmdc input
+/ options
+/ keywords
+'unicos' 'unix' 'wien' 'T3E64' 'int64' '$format' 
+ 'blas2' 'blas3' 'pipemode' 'pointer'  / flags
+/ filenames #not used in pipemode
+EOF
+;;############################################################
+
+*) echo machine_id=$machine_id not recognized ; 
+   echo "supported maschines are: ";
+   echo "vax (vax/vms) , sun (sun sparc) "
+   echo "cray (cray ymp), fujitsu_vp (fujitsu vp2000) "
+   echo "rs6000 (aix4.x,aix3.x) "
+   echo "sp1 (ibm sp1), sp2 (ibm sp2), linux , "
+   echo "decalpha (dec osf/1, 32bit integer, 64bit code) , "
+   echo "decalpha64 (dec osf/1, 64bit integer, 64bit code) , "
+   echo "sgipower (sgi power challenge, 32bit integer, 64bit code) " 
+   echo "T3D (cray t3d), T3E64 (cray t3e64) "
+   exit 2 ;;
+esac
+  sed -f sedscript cmdcin > cmdcin.scr
+  rm cmdcin
+  mv cmdcin.scr cmdcin
+
+#
+#  figure out how to concatenate two lines.
+#  (posix printf is not yet sufficiently portable.)
+#
+
+if [ `echo -n x` = "-n x" ] ;then	#System V unix
+   ECHO1="";ECHO2=\\c
+else					#Berkeley unix
+   ECHO1=-n;ECHO2=""
+fi
+
+#
+# loop over filelist and port each entry
+#
+
+for i in $*  ;do
+   echo $ECHO1 porting $i to $machine_id in mode $specification \
+    using PORT.$$.TMP...$ECHO2
+   cp $i $i.bak
+   ./cmdc.x <$i >PORT.$$.TMP || exit 3
+   ./$BLASX  <PORT.$$.TMP    >$i  || exit 4
+   rm $i.bak
+   echo $i overwritten.
+done
+
+rm -f PORT.$$.TMP
+rm -f sedscript
+rm -f cmdcin cmdcls
+exit 0

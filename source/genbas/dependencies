@@ -1,0 +1,20 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(genbas.o): paracom.inc     
+$(lib_program)(basis.o): paracom.inc     
+$(lib_program)(gendrv.o): paracom.inc     
+$(lib_program)(genind.o): paracom.inc     
+$(lib_program)(genout.o): paracom.inc     
+$(lib_program)(normf.o): paracom.inc      
+$(lib_program)(ovrlap.o): paracom.inc         
+$(lib_program)(transr.o): paracom.inc     
+$(lib_program)(expand.o): paracom.inc     
+$(lib_program)(gendat.o): paracom.inc     
+$(lib_program)(geninp.o): paracom.inc     
+$(lib_program)(genvec.o): paracom.inc     
+$(lib_program)(profil.o): paracom.inc     
+$(lib_program)(usrinp.o): paracom.inc     
+

@@ -1,0 +1,25 @@
+C
+C     ==================
+      SUBROUTINE MFDENSN(DAAR,DBAR,DAAI,DBAI,DOAAR,DOBAR,DOAAI,DOBAI,
+     +                   DOACR,DOBCR,DOACI,DOBCI)
+C     ==================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     TRANSFORM THE MO'S BACK TO THE NON SYMMETRY ADAPTED BASIS
+C     AND GET DENSITYMATRIX IN THE NON-ADAPTED BASIS
+C
+      INCLUDE 'paracom.inc'
+      INCLUDE 'general.inc'
+C
+      REAL*8 DAAR(*),DBAR(*),DAAI(*),DBAI(*)
+      REAL*8 DOAAR(*),DOBAR(*),DOAAI(*),DOBAI(*)
+      REAL*8 DOACR(*),DOBCR(*),DOACI(*),DOBCI(*)
+C
+      CALL DENSN (DAAR,DAAI,DBAR,DBAI,.FALSE.,0)
+      IF (OPENSH) THEN 
+         CALL DENSN (DOAAR,DOAAI,DOBAR,DOBAI,.TRUE.,1)
+	 IF (NOPEN.GT.1) CALL DENSN (DOACR,DOACI,
+     +                               DOBCR,DOBCI,.TRUE.,2)
+      ENDIF
+      RETURN
+      END

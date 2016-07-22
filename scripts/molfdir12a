@@ -1,0 +1,56 @@
+#!/bin/csh
+#
+#  check to see if a molecule name is given
+#
+if ($#argv < 1) then
+echo "no molecule name given, you BOZO\!\!"
+goto exit
+endif
+if ($#argv < 2) then
+echo "give scratch directory, you BOZO\!\!"
+goto exit
+endif
+#
+#  set endfile definitions
+#
+set input=$cwd/$1.molfdir.in
+set output=$cwd/$1.molfdir.out
+set currdir=$cwd
+set execdir=$MOLFDIR/bin/$MOLFDIR_TARGET
+set scrd=$2/$1.molfdir
+echo "input:$input"
+echo "output:$output"
+echo "scrd:$scrd"
+#
+#  move to scratch
+#  check to see if the directory exists
+#
+if (-e $scrd) then
+cd $scrd
+else
+mkdir $scrd
+cd $scrd
+endif
+#
+#  link to basis files if necessary
+#
+ln -f -s $currdir/*.bas .
+#
+#  run everything up to goscip
+#
+cp $input MOLFDIR.INP
+$execdir/molfdir.x >$output
+$execdir/relonel.x >>$output
+$execdir/reltwel.x >>$output
+$execdir/mfdscf.x >>$output
+$execdir/propan.x >>$output
+$execdir/tmoone.x >>$output
+$execdir/rotran.x >>$output
+$execdir/goscip.x >>$output
+# Clean up if save is not specified
+if ($#argv < 3) then
+rm *
+cd ..
+rmdir $scrd
+endif
+exit

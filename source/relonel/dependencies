@@ -1,0 +1,19 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(drelon.o): paracom.inc
+$(lib_program)(fmch.o): paracom.inc
+$(lib_program)(gentab1.o): paracom.inc
+$(lib_program)(mfd2inp.o): paracom.inc mpidef.inc
+$(lib_program)(mfdaint.o): paracom.inc
+$(lib_program)(mfdata2.o): paracom.inc mpidef.inc
+$(lib_program)(mfdgint.o): paracom.inc
+$(lib_program)(mfdone.o): paracom.inc mpidef.inc
+$(lib_program)(mfdonee.o): paracom.inc mpidef.inc
+$(lib_program)(mfdpint.o): paracom.inc
+$(lib_program)(mfdppt.o): paracom.inc mpidef.inc
+$(lib_program)(mfdstin.o): paracom.inc
+$(lib_program)(relonel.o): mpidef.inc
+

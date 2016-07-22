@@ -1,0 +1,60 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(addone.o): paracom.inc general.inc
+$(lib_program)(concop.o): paracom.inc general.inc
+$(lib_program)(crscf.o): paracom.inc general.inc memory.inc mpidef.inc
+$(lib_program)(densn.o): paracom.inc general.inc
+$(lib_program)(denss.o): paracom.inc general.inc
+$(lib_program)(denst.o): paracom.inc general.inc
+$(lib_program)(diis.o): paracom.inc general.inc diis.inc
+$(lib_program)(diiser.o): paracom.inc general.inc diis.inc
+$(lib_program)(diisiv.o): diis.inc
+$(lib_program)(diisuf.o): paracom.inc general.inc diis.inc
+$(lib_program)(diisup.o): paracom.inc general.inc diis.inc
+$(lib_program)(extrap.o): paracom.inc general.inc diis.inc
+$(lib_program)(fock.o): paracom.inc memory.inc
+$(lib_program)(gaunt.o): paracom.inc
+$(lib_program)(mfd4inp.o): paracom.inc general.inc diis.inc ossel.inc mpidef.inc
+$(lib_program)(mfd4out.o): paracom.inc general.inc memory.inc
+$(lib_program)(mfdata4.o): paracom.inc general.inc memory.inc mpidef.inc
+$(lib_program)(mfdbreit.o): paracom.inc general.inc memory.inc
+$(lib_program)(mfdbreit.par.o): paracom.inc general.inc memory.inc mpidef.inc
+$(lib_program)(mfdbslv.o): paracom.inc general.inc memory.inc mpidef.inc
+$(lib_program)(mfdcrit.o): paracom.inc general.inc
+$(lib_program)(mfddriv.o): paracom.inc general.inc diis.inc memory.inc
+$(lib_program)(mfddslv.o): paracom.inc general.inc diis.inc memory.inc mpidef.inc
+$(lib_program)(mfdensi.o): paracom.inc general.inc
+$(lib_program)(mfdensn.o): paracom.inc general.inc
+$(lib_program)(mfdenss.o): paracom.inc general.inc
+$(lib_program)(mfdenst.o): paracom.inc general.inc
+$(lib_program)(mfdfmcp.o): paracom.inc general.inc memory.inc
+$(lib_program)(mfdfock.o): paracom.inc general.inc memory.inc
+$(lib_program)(mfdfock.par.o): paracom.inc general.inc memory.inc mpidef.inc
+$(lib_program)(mfdfslv.o): paracom.inc general.inc memory.inc mpidef.inc
+$(lib_program)(mfdiagh.o): paracom.inc general.inc memory.inc diis.inc
+$(lib_program)(mfdpoef.o): paracom.inc general.inc memory.inc
+$(lib_program)(mfdseiv.o): paracom.inc general.inc
+$(lib_program)(mfdtabl.o): paracom.inc general.inc mpidef.inc memory.inc
+$(lib_program)(mfopen.o): paracom.inc general.inc memory.inc
+$(lib_program)(mfopen.par.o): paracom.inc general.inc memory.inc mpidef.inc
+$(lib_program)(mfdprop.o): paracom.inc general.inc
+$(lib_program)(mfdtrce.o): paracom.inc
+$(lib_program)(ortho.o): paracom.inc general.inc
+$(lib_program)(pople.o): paracom.inc general.inc
+$(lib_program)(rdens.o): paracom.inc general.inc
+$(lib_program)(rdiis.o): paracom.inc general.inc diis.inc
+$(lib_program)(readint.o): paracom.inc
+$(lib_program)(rsdens.o): paracom.inc general.inc
+$(lib_program)(scaledm.o): diis.inc
+$(lib_program)(scf.o): paracom.inc general.inc memory.inc mpidef.inc diis.inc
+$(lib_program)(scfdat.o): paracom.inc general.inc diis.inc
+$(lib_program)(selvec.o): paracom.inc general.inc ossel.inc
+$(lib_program)(timsym.o): paracom.inc general.inc
+$(lib_program)(trmat.o): paracom.inc
+$(lib_program)(twostrt.o): paracom.inc general.inc memory.inc
+$(lib_program)(wdens.o): paracom.inc general.inc
+$(lib_program)(wdiis.o): paracom.inc general.inc diis.inc
+

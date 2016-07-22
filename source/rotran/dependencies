@@ -1,0 +1,47 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(comsym.o): molf.inc sym.inc inpt.inc redme.inc
+$(lib_program)(comsym.par.o): molf.inc sym.inc inpt.inc redme.inc mpidef.inc
+$(lib_program)(flshsk.o): files.inc
+$(lib_program)(gethtbi.o): files.inc
+$(lib_program)(gethti.o): files.inc
+$(lib_program)(getmos.o): molf.inc files.inc sym.inc inpt.inc vecs.inc
+$(lib_program)(getmos.par.o): molf.inc files.inc sym.inc inpt.inc vecs.inc mpidef.inc
+$(lib_program)(getpq.o): files.inc inpt.inc
+$(lib_program)(getskel.o): files.inc vecs.inc
+$(lib_program)(getsti.o): files.inc
+$(lib_program)(init.o): molf.inc files.inc sym.inc mpidef.inc
+$(lib_program)(initc.o): redme.inc files.inc
+$(lib_program)(inittwoe.o): files.inc vecs.inc
+$(lib_program)(inittwoe.par.o): files.inc vecs.inc
+$(lib_program)(kramers.o): vecs.inc mpidef.inc
+$(lib_program)(makind.o): molf.inc inpt.inc
+$(lib_program)(msumtim.o): vecs.inc
+$(lib_program)(mtimher.o): vecs.inc
+$(lib_program)(mtimhr2.o): vecs.inc
+$(lib_program)(outpp0.o): files.inc
+$(lib_program)(phasetr.o): vecs.inc
+$(lib_program)(readin.o): molf.inc thres.inc sym.inc inpt.inc vecs.inc mpidef.inc
+$(lib_program)(rotran.o): molf.inc inpt.inc redme.inc files.inc thres.inc
+$(lib_program)(rotran.par.o): molf.inc inpt.inc redme.inc files.inc thres.inc mpidef.inc
+$(lib_program)(skelop.o): molf.inc sym.inc inpt.inc redme.inc
+$(lib_program)(skelop.par.o): molf.inc sym.inc redme.inc
+$(lib_program)(skelout.o): vecs.inc files.inc
+$(lib_program)(sort1.o): files.inc inpt.inc
+$(lib_program)(sr2flsb.o): files.inc vecs.inc inpt.inc mpidef.inc
+$(lib_program)(sr2flsh.o): files.inc vecs.inc inpt.inc mpidef.inc
+$(lib_program)(sr2ini.o): files.inc inpt.inc mpidef.inc
+$(lib_program)(srtdel.o): files.inc inpt.inc
+$(lib_program)(symtriz.o): inpt.inc vecs.inc redme.inc sym.inc
+$(lib_program)(trans1.o): vecs.inc inpt.inc molf.inc
+$(lib_program)(trans2.o): inpt.inc vecs.inc thres.inc molf.inc redme.inc sym.inc files.inc
+$(lib_program)(trbout.o): vecs.inc files.inc
+$(lib_program)(trfda1.o): vecs.inc inpt.inc molf.inc
+$(lib_program)(trfda2.o): inpt.inc vecs.inc thres.inc molf.inc redme.inc files.inc mpidef.inc
+$(lib_program)(trout.o): vecs.inc thres.inc files.inc
+$(lib_program)(unique.o): vecs.inc files.inc
+$(lib_program)(writwoe.o): vecs.inc thres.inc
+

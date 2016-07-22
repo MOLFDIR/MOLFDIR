@@ -1,0 +1,15 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(fgamma.o): paracom.inc
+$(lib_program)(gentab.o): paracom.inc
+$(lib_program)(mfd3inp.o): paracom.inc mpidef.inc
+$(lib_program)(mfdata3.o): paracom.inc
+$(lib_program)(mfdtwoe.o): paracom.inc work.inc
+$(lib_program)(mfdtwoe.par.o): paracom.inc work.inc mpidef.inc
+$(lib_program)(reltwel.par.o): mpidef.inc
+$(lib_program)(spdfg.o): paracom.inc
+$(lib_program)(wrbuf.o): paracom.inc
+

@@ -1,0 +1,572 @@
+ echo of the argos input file:
+ ------------------------------------------------------------------------
+  Rn2
+   0  2  3  10  3  0  0  0  0  1  1 /
+   1  1a   / Irrep labels
+   0
+   1  1
+   3  1  1  1
+   6  1  1  1  1  1  1
+   1  1  1 / C s orbitals
+   1
+   3  3  2 / C p orbitals
+   1  0  0
+   0  1  0
+   0  0  1
+   6  6  3 /
+   1  0  0  0  0  0
+   0  1  0  0  0  0
+   0  0  1  0  0  0
+   0  0  0  1  0  0
+   0  0  0  0  1  0
+   0  0  0  0  0  1
+ 1 1 1
+  1.7955700  1.0
+ 1 1 1
+  1.18144300 1.00000000
+ 1 1 1
+  0.27322100 1.00000000
+ 1 1 1
+  0.10905200 1.00000000
+ 1 2 1
+  1.9229050 1.0
+ 1 2 1
+  1.38235500 1.00000000
+ 1 2 1
+  0.29088200 1.00000000
+ 1 2 1
+  0.10244200 1.00000000
+ 1 3 1
+   0.260 1.0
+ 1 3 1
+   0.120 1.0
+    4   3 / Rn Stoll and Preuss
+ 1
+       2        1.5764690       -9.91566200
+ 4
+       2        0.9223860       -5.01900500
+       2        1.7819150       37.03679000
+       2       10.8046010      195.10330800
+       2        1.5764690        9.91566200
+ 3
+       2        0.7242910       -1.96648100
+       2        1.3638600       23.46405900
+       2        1.5764690        9.91566200
+ 3
+       2        0.7694000        7.48345700
+       2        1.5388000        9.36190000
+       2        1.5764690        9.91566200
+ 2
+       2        1.2138970       -6.76315000
+       2        1.5764690        9.91566200
+ 2
+       2        0.7242910        1.531774
+       2        1.3638600       -2.084485
+ 2
+       2        0.7694000        0.472125
+       2        1.5388000       -1.011408
+ 1
+       2        1.2138970        0.053318
+  Rn 10  1 8.  / !Symbol, No. AO sets, No. related atoms, Nuc. charge
+   0.0000    0.0000    4.67329280
+   1  1
+   2  1
+   3  1
+   4  1
+   5  2
+   6  2
+   7  2
+   8  2
+   9  3
+  10  3
+   1     / Core, Spin_orbit potential Index
+  Rn 10  1 8.  / !Symbol, No. AO sets, No. related atoms, Nuc. charge
+   0.0000    0.0000   -4.67329280
+   1  1
+   2  1
+   3  1
+   4  1
+   5  2
+   6  2
+   7  2
+   8  2
+   9  3
+  10  3
+   1     / Core, Spin_orbit potential Index
+  
+ u:scf
+ EH Q-Q coupling states. Q=0
+   0   1  512  3 6 13 13 13 -1 /
+   0 0 0 0 0 0 6 1 6 0 /
+   1 /
+  8   0   /
+  
+  
+ ------------------------------------------------------------------------
+1                             program "argos" 4.1b1
+                             columbus program system
+
+             this program computes integrals over symmetry orbitals
+                 of generally contracted gaussian atomic orbitals.
+                         programmed by russell m. pitzer
+
+                             version date: 11-sep-91
+
+ references:
+
+    symmetry analysis (equal contributions):
+    r. m. pitzer, j. chem. phys. 58, 3111 (1973).
+
+    ao integral evaluation (hondo):
+    m. dupuis, j. rys, and h. f. king, j. chem. phys. 65, 111 (1976).
+
+    general contraction of gaussian orbitals:
+    r. c. raffenetti, j. chem. phys. 58, 4452 (1973).
+
+    core potential ao integrals (meldps):
+    l. e. mcmurchie and e. r. davidson, j. comput. phys. 44, 289 (1981)
+
+ This Version of Program ARGOS is Maintained by:
+    Ron Shepard
+    Theoretical Chemistry Group
+    Chemistry Division
+    Argonne National Laboratory
+    Argonne, IL  60439
+    Internet: shepard@tcg.anl.gov
+
+
+ workspace allocation parameters: lcore=   4000000 mem1=         0 ifirst=         1
+
+ filenames and unit numbers:
+ unit description                   filename
+ ---- -----------                   ----------
+   6  listing file:                 argosls                                                     
+   4  1-e integral file:            aoints                                                      
+   8  2-e integral file [fsplit=2]: aoints2                                                     
+   5  input file:                   argosin                                                     
+
+ argos input parameters and titles:
+ ngen   =  0 ns     =  2 naords =  3 ncons  = 10 ngcs   =  3 itol   = 20
+ icut   =  9 aoints =  4 only1e =  0 inrm   =  1 ncrs   =  1
+ l1rec  =        -1      l2rec  =        -1      aoint2 =  8 fsplit =  2
+
+  Rn2                                                                            
+ aoints SIFS file created by argos.      crayc90 sn4019 CRAY C 11:18:50 13-Feb-98
+
+
+ irreducible representation   1
+ degeneracy                   1
+ label                       a  
+
+
+
+0direct product table
+    (a  ) (a  ) = a  
+
+0lx: a            ly: a            lz: a  
+
+
+
+
+
+
+0nuclear repulsion energy    6.84742030
+
+
+
+
+0primitive ao integrals neglected if exponential factor below 10**(-20)
+ contracted ao and so integrals neglected if value below 10**(- 9)
+ symmetry orbital integrals written on units  4  8
+1             Rn atoms
+
+0nuclear charge   8.00
+
+0center            x               y               z
+   1             0.00000000      0.00000000      4.67329280
+
+
+          1s orbitals
+0orbital exponents          1.795570    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao  1a  1
+  1,  1s  1.000
+
+
+          1s orbitals
+0orbital exponents          1.181443    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao  2a  1
+  1,  1s  1.000
+
+
+          1s orbitals
+0orbital exponents         0.2732210    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao  3a  1
+  1,  1s  1.000
+
+
+          1s orbitals
+0orbital exponents         0.1090520    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao  4a  1
+  1,  1s  1.000
+
+
+          2p orbitals
+0orbital exponents          1.922905    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao  5a  1  6a  1  7a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          2p orbitals
+0orbital exponents          1.382355    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao  8a  1  9a  1 10a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          2p orbitals
+0orbital exponents         0.2908820    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 11a  1 12a  1 13a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          2p orbitals
+0orbital exponents         0.1024420    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 14a  1 15a  1 16a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          3d orbitals
+0orbital exponents         0.2600000    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 17a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 18a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 19a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ ctr, ao 17a  1 18a  1 19a  1 20a  1 21a  1 22a  1
+  1,  xx  0.577  0.000  0.000  0.000  0.000  0.000
+  1,  yy  0.000  0.577  0.000  0.000  0.000  0.000
+  1,  zz  0.000  0.000  0.577  0.000  0.000  0.000
+  1,  xy  0.000  0.000  0.000  1.000  0.000  0.000
+  1,  xz  0.000  0.000  0.000  0.000  1.000  0.000
+  1,  yz  0.000  0.000  0.000  0.000  0.000  1.000
+
+
+          3d orbitals
+0orbital exponents         0.1200000    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 23a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 24a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 25a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ ctr, ao 23a  1 24a  1 25a  1 26a  1 27a  1 28a  1
+  1,  xx  0.577  0.000  0.000  0.000  0.000  0.000
+  1,  yy  0.000  0.577  0.000  0.000  0.000  0.000
+  1,  zz  0.000  0.000  0.577  0.000  0.000  0.000
+  1,  xy  0.000  0.000  0.000  1.000  0.000  0.000
+  1,  xz  0.000  0.000  0.000  0.000  1.000  0.000
+  1,  yz  0.000  0.000  0.000  0.000  0.000  1.000
+
+
+           Rn core potential
+
+          g potential
+0powers             2
+ exponentials   1.576469    
+ coefficients  -9.915662    
+
+          s - g potential
+0powers             2              2              2              2
+ exponentials  0.9223860       1.781915       10.80460       1.576469    
+ coefficients  -5.019005       37.03679       195.1033       9.915662    
+
+          p - g potential
+0powers             2              2              2
+ exponentials  0.7242910       1.363860       1.576469    
+ coefficients  -1.966481       23.46406       9.915662    
+
+          d - g potential
+0powers             2              2              2
+ exponentials  0.7694000       1.538800       1.576469    
+ coefficients   7.483457       9.361900       9.915662    
+
+          f - g potential
+0powers             2              2
+ exponentials   1.213897       1.576469    
+ coefficients  -6.763150       9.915662    
+
+
+           Rn spin-orbit potential
+
+          p potential
+0powers             2              2
+ exponentials  0.7242910       1.363860    
+ coefficients   1.531774      -2.084485    
+
+          d potential
+0powers             2              2
+ exponentials  0.7694000       1.538800    
+ coefficients  0.2360625     -0.5057040    
+
+          f potential
+0powers             2
+ exponentials   1.213897    
+ coefficients  1.7772667E-02
+1             Rn atoms
+
+0nuclear charge   8.00
+
+0center            x               y               z
+   1             0.00000000      0.00000000     -4.67329280
+
+
+          1s orbitals
+0orbital exponents          1.795570    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 29a  1
+  1,  1s  1.000
+
+
+          1s orbitals
+0orbital exponents          1.181443    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 30a  1
+  1,  1s  1.000
+
+
+          1s orbitals
+0orbital exponents         0.2732210    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 31a  1
+  1,  1s  1.000
+
+
+          1s orbitals
+0orbital exponents         0.1090520    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 32a  1
+  1,  1s  1.000
+
+
+          2p orbitals
+0orbital exponents          1.922905    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 33a  1 34a  1 35a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          2p orbitals
+0orbital exponents          1.382355    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 36a  1 37a  1 38a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          2p orbitals
+0orbital exponents         0.2908820    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 39a  1 40a  1 41a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          2p orbitals
+0orbital exponents         0.1024420    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ ctr, ao 42a  1 43a  1 44a  1
+  1,   x  1.000  0.000  0.000
+  1,   y  0.000  1.000  0.000
+  1,   z  0.000  0.000  1.000
+
+
+          3d orbitals
+0orbital exponents         0.2600000    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 45a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 46a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 47a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ ctr, ao 45a  1 46a  1 47a  1 48a  1 49a  1 50a  1
+  1,  xx  0.577  0.000  0.000  0.000  0.000  0.000
+  1,  yy  0.000  0.577  0.000  0.000  0.000  0.000
+  1,  zz  0.000  0.000  0.577  0.000  0.000  0.000
+  1,  xy  0.000  0.000  0.000  1.000  0.000  0.000
+  1,  xz  0.000  0.000  0.000  0.000  1.000  0.000
+  1,  yz  0.000  0.000  0.000  0.000  0.000  1.000
+
+
+          3d orbitals
+0orbital exponents         0.1200000    
+ contraction coefficients   1.000000    
+
+          symmetry orbitals
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 51a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 52a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ syminp() warning: from l2opxv(), ierr= -1 s.o. basis function 53a   is not an L^2 eigenvector. <v|L^2|v>/<v|v> =  4.00000000
+ ctr, ao 51a  1 52a  1 53a  1 54a  1 55a  1 56a  1
+  1,  xx  0.577  0.000  0.000  0.000  0.000  0.000
+  1,  yy  0.000  0.577  0.000  0.000  0.000  0.000
+  1,  zz  0.000  0.000  0.577  0.000  0.000  0.000
+  1,  xy  0.000  0.000  0.000  1.000  0.000  0.000
+  1,  xz  0.000  0.000  0.000  0.000  1.000  0.000
+  1,  yz  0.000  0.000  0.000  0.000  0.000  1.000
+
+
+           Rn core potential
+
+          g potential
+0powers             2
+ exponentials   1.576469    
+ coefficients  -9.915662    
+
+          s - g potential
+0powers             2              2              2              2
+ exponentials  0.9223860       1.781915       10.80460       1.576469    
+ coefficients  -5.019005       37.03679       195.1033       9.915662    
+
+          p - g potential
+0powers             2              2              2
+ exponentials  0.7242910       1.363860       1.576469    
+ coefficients  -1.966481       23.46406       9.915662    
+
+          d - g potential
+0powers             2              2              2
+ exponentials  0.7694000       1.538800       1.576469    
+ coefficients   7.483457       9.361900       9.915662    
+
+          f - g potential
+0powers             2              2
+ exponentials   1.213897       1.576469    
+ coefficients  -6.763150       9.915662    
+
+
+           Rn spin-orbit potential
+
+          p potential
+0powers             2              2
+ exponentials  0.7242910       1.363860    
+ coefficients   1.531774      -2.084485    
+
+          d potential
+0powers             2              2
+ exponentials  0.7694000       1.538800    
+ coefficients  0.2360625     -0.5057040    
+
+          f potential
+0powers             2
+ exponentials   1.213897    
+ coefficients  1.7772667E-02
+
+ output SIFS file header information:
+  Rn2                                                                            
+ aoints SIFS file created by argos.      crayc90 sn4019 CRAY C 11:18:50 13-Feb-98
+
+ output energy(*) values:
+ energy( 1)=  6.847420302875E+00, ietype=   -1,    core energy of type: Nuc.Rep.
+
+ total core energy =   6.847420302875E+00
+
+ nsym = 1 nbft=  56
+
+ symmetry  =    1
+ slabel(*) =  a  
+ nbpsy(*)  =   56
+
+ info(*) =          2      2048      1636      2048      1350
+
+ output orbital labels, i:bfnlab(i)=
+   1:  1_Rn_s   2:  2_Rn_s   3:  3_Rn_s   4:  4_Rn_s   5:  5_Rn_p   6:  6_Rn_p   7:  7_Rn_p   8:  8_Rn_p   9:  9_Rn_p  10: 10_Rn_p
+  11: 11_Rn_p  12: 12_Rn_p  13: 13_Rn_p  14: 14_Rn_p  15: 15_Rn_p  16: 16_Rn_p  17: 17_Rn_d  18: 18_Rn_d  19: 19_Rn_d  20: 20_Rn_d
+  21: 21_Rn_d  22: 22_Rn_d  23: 23_Rn_d  24: 24_Rn_d  25: 25_Rn_d  26: 26_Rn_d  27: 27_Rn_d  28: 28_Rn_d  29: 29_Rn_s  30: 30_Rn_s
+  31: 31_Rn_s  32: 32_Rn_s  33: 33_Rn_p  34: 34_Rn_p  35: 35_Rn_p  36: 36_Rn_p  37: 37_Rn_p  38: 38_Rn_p  39: 39_Rn_p  40: 40_Rn_p
+  41: 41_Rn_p  42: 42_Rn_p  43: 43_Rn_p  44: 44_Rn_p  45: 45_Rn_d  46: 46_Rn_d  47: 47_Rn_d  48: 48_Rn_d  49: 49_Rn_d  50: 50_Rn_d
+  51: 51_Rn_d  52: 52_Rn_d  53: 53_Rn_d  54: 54_Rn_d  55: 55_Rn_d  56: 56_Rn_d
+
+ bfn_to_center map(*), i:map(i)
+   1:  1   2:  1   3:  1   4:  1   5:  1   6:  1   7:  1   8:  1   9:  1  10:  1
+  11:  1  12:  1  13:  1  14:  1  15:  1  16:  1  17:  1  18:  1  19:  1  20:  1
+  21:  1  22:  1  23:  1  24:  1  25:  1  26:  1  27:  1  28:  1  29:  2  30:  2
+  31:  2  32:  2  33:  2  34:  2  35:  2  36:  2  37:  2  38:  2  39:  2  40:  2
+  41:  2  42:  2  43:  2  44:  2  45:  2  46:  2  47:  2  48:  2  49:  2  50:  2
+  51:  2  52:  2  53:  2  54:  2  55:  2  56:  2
+
+ bfn_to_orbital_type map(*), i:map(i)
+   1:  1   2:  1   3:  1   4:  1   5:  2   6:  2   7:  2   8:  2   9:  2  10:  2
+  11:  2  12:  2  13:  2  14:  2  15:  2  16:  2  17:  4  18:  4  19:  4  20:  4
+  21:  4  22:  4  23:  4  24:  4  25:  4  26:  4  27:  4  28:  4  29:  1  30:  1
+  31:  1  32:  1  33:  2  34:  2  35:  2  36:  2  37:  2  38:  2  39:  2  40:  2
+  41:  2  42:  2  43:  2  44:  2  45:  4  46:  4  47:  4  48:  4  49:  4  50:  4
+  51:  4  52:  4  53:  4  54:  4  55:  4  56:  4
+1       56 symmetry orbitals,         a  :  56
+ !timer: syminp required                 cpu_time=     0.046 walltime=     0.113
+
+ socfpd: mcxu=     3072 mcxu2=     2594 left=  3996928
+ !timer: socfpd required                 cpu_time=     0.005 walltime=     0.007
+
+ oneint:   418 S1(*)    integrals were written in  1 records.
+ oneint:   432 T1(*)    integrals were written in  1 records.
+ oneint:   544 V1(*)    integrals were written in  1 records.
+ oneint:   424 Veff(*)  integrals were written in  1 records.
+ oneint:   194 Im(SO:x) integrals were written in  1 records.
+ oneint:   194 Im(SO:y) integrals were written in  1 records.
+ oneint:   122 Im(SO:z) integrals were written in  1 records.
+
+ !timer: oneint required                 cpu_time=     2.655 walltime=     2.679
+ !timer: seg1mn required                 cpu_time=     2.706 walltime=     2.799
+
+ driver: 1-e integral  workspace high-water mark =     21416
+ !timer: argos required                  cpu_time=     2.706 walltime=     2.836

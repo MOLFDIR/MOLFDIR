@@ -1,0 +1,51 @@
+
+      SUBROUTINE PMM MM(NA,M,AR,AI,L,NB,BR,BI,N,NC,CR,CI,NN)
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+      DIMENSION AR(NA,L),AI(NA,L),BR(NB,N),BI(NB,N),CR(NC,NN),CI(NC,NN)
+      IF(M.GT.NA.OR.L.GT.NB.OR.M.GT.NC.OR.N.GT.NN)
+     $CALL Q2JOB(6,'**ERROR IN ARGUMENTS P.PMM MM**',' ',0)
+      DO 30 I=1,M
+      DO 20 K=1,N
+      SUMR=0.0
+      SUMI=0.0
+      DO 10 J=1,L
+      SUMR=SUMR+AR(I,J)*BR(J,K)-AI(I,J)*BI(J,K)
+      SUMI=SUMI+AR(I,J)*BI(J,K)+AI(I,J)*BR(J,K)
+   10 CONTINUE
+      CR(I,K)=SUMR
+      CI(I,K)=SUMI
+   20 CONTINUE
+   30 CONTINUE
+      RETURN
+      ENTRY PMMCMM(NA,M,AR,AI,L,NB,BR,BI,N,NC,CR,CI,NN)
+      DO 60 I=1,L
+      DO 50 K=1,N
+      SUMR=0.0
+      SUMI=0.0
+      DO 40 J=1,M
+      SUMR=SUMR+AR(J,I)*BR(J,K)+AI(J,I)*BI(J,K)
+      SUMI=SUMI+AR(J,I)*BI(J,K)-AI(J,I)*BR(J,K)
+   40 CONTINUE
+      CR(I,K)=SUMR
+      CI(I,K)=SUMI
+   50 CONTINUE
+   60 CONTINUE
+      RETURN
+      ENTRY PMMMCM(NA,M,AR,AI,L,NB,BR,BI,N,NC,CR,CI,NN)
+      IF(M.GT.NA.OR.M.GT.NC.OR.N.GT.L.OR.NN.GT.NB)
+     $CALL Q2JOB(6,'**ERROR IN ARGUMENTS P.PMMMCM',' ',0)
+      DO 90 I=1,M
+      DO 80 K=1,NN
+      SUMR=0.0
+      SUMI=0.0
+      DO 70 J=1,N
+      SUMR=SUMR+AR(I,J)*BR(K,J)+AI(I,J)*BI(K,J)
+      SUMI=SUMI-AR(I,J)*BI(K,J)+AI(I,J)*BR(K,J)
+   70 CONTINUE
+      CR(I,K)=SUMR
+      CI(I,K)=SUMI
+   80 CONTINUE
+   90 CONTINUE
+      RETURN
+      END

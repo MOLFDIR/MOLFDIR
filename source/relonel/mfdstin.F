@@ -1,0 +1,75 @@
+C
+C     ==================
+      SUBROUTINE MFDSTIN(II,JJ)
+C     ==================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     CALCULATE OVERLAP (S) AND KINETIC ENERGY (T) INTEGRALS
+C
+      INCLUDE 'paracom.inc'
+C
+      COMMON/INTI/IM,JM,KM,LM,I,J,K,L
+      COMMON/INTR/SINT,TINT,AINT
+C
+      ITYP=ITYPE(I)
+      JTYP=ITYPE(J)
+      ICNT=ICENT(I)
+      JCNT=ICENT(J)
+      NL1=NR(ITYP,1)
+      NL2=NR(JTYP,1)
+      NM1=NR(ITYP,2)
+      NM2=NR(JTYP,2)
+      NN1=NR(ITYP,3)
+      NN2=NR(JTYP,3)
+      AR(1)=XCORD(ICNT)
+      AR(2)=YCORD(ICNT)
+      AR(3)=ZCORD(ICNT)
+      BR(1)=XCORD(JCNT)
+      BR(2)=YCORD(JCNT)
+      BR(3)=ZCORD(JCNT)
+      DSAB=(AR(1)-BR(1))**2+(AR(2)-BR(2))**2+(AR(3)-BR(3))**2
+      A=ALPHA(II)
+      B=ALPHA(JJ)
+      T0=1.0D0/(A+B)
+      DISTAB=A*B*T0*DSAB
+      P1=(A*AR(1)+B*BR(1))*T0
+      P2=(A*AR(2)+B*BR(2))*T0
+      P3=(A*AR(3)+B*BR(3))*T0
+      IF(DISTAB.GT.DNORM) GO TO 1635
+#if defined (BIT64)
+      SOO=((PI*T0)**1.5)*EXP(-DISTAB)
+#else
+      SOO=((PI*T0)**1.5D0)*DEXP(-DISTAB)
+#endif
+      PAX=P1-AR(1)
+      PBX=P1-BR(1)
+      PAY=P2-AR(2)
+      PBY=P2-BR(2)
+      PAZ=P3-AR(3)
+      PBZ=P3-BR(3)
+      T1=OVLAP(NL1,NL2,PAX,PBX,T0)
+      T2=OVLAP(NM1,NM2,PAY,PBY,T0)
+      T3=OVLAP(NN1,NN2,PAZ,PBZ,T0)
+      S1=OVLAP(NL2+2,NL1,PBX,PAX,T0)
+      S2=OVLAP (NM2+2,NM1,PBY,PAY,T0)
+      S3=OVLAP (NN2+2,NN1,PBZ,PAZ,T0)
+      PART=2*(NL2+NM2+NN2)+3
+      SINT=SINT+T1*T2*T3*SOO
+      TKE=B*(PART*T1*T2*T3-2.0D0*B*(S1*T2*T3+T1*S2*T3+T1*T2*S3))
+      IF (NL2-1) 190,190,191
+  191 PART=(NL2*(NL2-1))/2
+      S1=OVLAP(NL1,NL2-2,PAX,PBX,T0)
+      TKE=TKE-PART*S1*T2*T3
+  190 IF (NM2-1) 192,192,193
+  193 PART=(NM2*(NM2-1))/2
+      S2=OVLAP(NM1,NM2-2,PAY,PBY,T0)
+      TKE=TKE-PART*T1*S2*T3
+  192 IF (NN2-1) 194,194,195
+  195 PART=(NN2*(NN2-1))/2
+      S3=OVLAP(NN1,NN2-2,PAZ,PBZ,T0)
+      TKE=TKE-PART*T1*T2*S3
+  194 CONTINUE
+      TINT=TKE*SOO
+ 1635 CONTINUE
+      RETURN
+      END

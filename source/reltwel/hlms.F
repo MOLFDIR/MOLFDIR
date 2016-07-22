@@ -1,0 +1,17 @@
+      SUBROUTINE HLMS (HLM,HL,HM,IJ,IJPRIM,KLPRIM,NIJ,NKL,LS,MS,LMS)
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+      REAL*8 HLM(KLPRIM),HL(IJPRIM,0:*),HM(KLPRIM,0:*)
+C
+      DO 10 KL = 1, KLPRIM
+      HLM (KL) = 0.D0
+   10 CONTINUE
+      DO 100 L = LS, LS + NIJ
+      M = LMS - (L - LS) + MS
+      IF ((M.LT.MS).OR.M.GT.(MS+NKL))  GO TO 100
+      DO 20 KL = 1, KLPRIM
+      HLM(KL) = HLM(KL) + HL(IJ,L) * HM(KL,M)
+   20 CONTINUE
+  100 CONTINUE
+      RETURN
+      END

@@ -1,0 +1,12 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(caldens.o): comblock.inc param.inc
+$(lib_program)(calpart.o): comblock.inc param.inc
+$(lib_program)(densmat.o): comblock.inc param.inc
+$(lib_program)(densty.o): comblock.inc param.inc
+$(lib_program)(init.o): comblock.inc param.inc
+$(lib_program)(readin.o): comblock.inc param.inc
+

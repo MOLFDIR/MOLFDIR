@@ -1,0 +1,63 @@
+C
+C     ==================
+      SUBROUTINE MFDSINT
+C     ==================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     PURPOSE : MFDSINT CALCULATES THE OVERLAP INTEGRAL BETWEE TWO
+C               CONTRACTED GAUSSIANS.
+C     COMMENT   LET      G(X,A,N;Y,B,L;Z,C,M)       BE A NORMALIZED
+C               LINEAR COMBINATION (COEFFICIENTS IN 'COEFF(.)') OF
+C               NORMALIZED GAUSSIANS (WITH NORM IN 'XNORM(.)') WITH
+C               CENTER (A,B,C) AND L-VALUE (N+L+M) THEN MFDSINT RE-
+C               TURNS THE VALUE (IN 'SINT') OF THE INTEGRAL
+C
+C      [G(X1,A1,N1;Y1,B1,L1;Z1,C1,M1)/G(X2,A2,N2;Y2,B2,L2;Z2,C2,M2)]
+C
+C
+      INCLUDE 'paracom.inc'
+C
+      SINT=0.
+      NL1=NX(ITYPA)
+      NL2=NX(ITYPB)
+      NM1=NY(ITYPA)
+      NM2=NY(ITYPB)
+      NN1=NZ(ITYPA)
+      NN2=NZ(ITYPB)
+      AX=XCORD(ICENTA)
+      BX=XCORD(ICENTB)
+      AY=YCORD(ICENTA)
+      BY=YCORD(ICENTB)
+      AZ=ZCORD(ICENTA)
+      BZ=ZCORD(ICENTB)
+      DISTAB=(AX-BX)**2 +(AY-BY)**2 +(AZ-BZ)**2
+      DO 20 II=ICTA,ICTB
+      A=ALPHA(II)
+      DO 10 JJ=ICTA,ICTB
+      B=ALPHA(JJ)
+      T=1./(A+B)
+      P1=(A*AX+B*BX)*T
+      P2=(A*AY+B*BY)*T
+      P3=(A*AZ+B*BZ)*T
+      DSAB=DISTAB*A*B*T
+      IF(DSAB.GT.32.)GO TO 10
+#if defined (BIT64)
+      SOO=((PI*T)**1.5)*EXP(-DSAB)*COEFF(II)*
+#else
+      SOO=((PI*T)**1.5)*DEXP(-DSAB)*COEFF(II)*
+#endif
+     +XNORM(II)*COEFF(JJ)*XNORM(JJ)
+      PAX=P1-AX
+      PBX=P1-BX
+      PAY=P2-AY
+      PBY=P2-BY
+      PAZ=P3-AZ
+      PBZ=P3-BZ
+      T1=OVLAP(NL1,NL2,PAX,PBX,T)
+      T2=OVLAP(NM1,NM2,PAY,PBY,T)
+      T3=OVLAP(NN1,NN2,PAZ,PBZ,T)
+      SINT=SINT+SOO*T1*T2*T3
+   10 CONTINUE
+   20 CONTINUE
+      RETURN
+      END

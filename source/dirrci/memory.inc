@@ -1,0 +1,3 @@
+      COMMON /CIMEMORY/ CI(MAXCORE)
+C
+      REAL*8 CI

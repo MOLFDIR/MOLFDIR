@@ -1,0 +1,40 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(calids_up.o): param.inc symm.inc
+$(lib_program)(cimem.o): param.inc symm.inc general.inc mempoint.inc
+$(lib_program)(criter.o): param.inc symm.inc general.inc iterat.inc
+$(lib_program)(densmt.o): param.inc symm.inc general.inc mempoint.inc files.inc
+$(lib_program)(detind.o): param.inc files.inc symm.inc
+$(lib_program)(diag.o): param.inc general.inc iterat.inc
+$(lib_program)(diagelm.o): param.inc symm.inc general.inc mempoint.inc files.inc
+$(lib_program)(dirdat.o): param.inc files.inc iterat.inc
+$(lib_program)(direct.o): files.inc
+$(lib_program)(driver.o): param.inc symm.inc general.inc mempoint.inc files.inc
+$(lib_program)(expand.o): param.inc symm.inc general.inc mempoint.inc files.inc
+$(lib_program)(getids.o): param.inc files.inc symm.inc mempoint.inc
+$(lib_program)(getvec.o): param.inc files.inc general.inc
+$(lib_program)(initvec.o): param.inc files.inc general.inc
+$(lib_program)(inprod.o): param.inc general.inc iterat.inc
+$(lib_program)(leading.o): param.inc symm.inc general.inc files.inc iterat.inc
+$(lib_program)(makegm.o): param.inc files.inc general.inc symm.inc
+$(lib_program)(makids.o): param.inc files.inc symm.inc mempoint.inc
+$(lib_program)(natorb.o): param.inc symm.inc general.inc
+$(lib_program)(nsrepl.o): param.inc symm.inc general.inc
+$(lib_program)(orbsin.o): param.inc symm.inc general.inc files.inc iterat.inc
+$(lib_program)(orthn.o): param.inc general.inc
+$(lib_program)(precond.o): param.inc general.inc iterat.inc
+$(lib_program)(putvec.o): param.inc files.inc general.inc
+$(lib_program)(reavec.o): param.inc files.inc general.inc iterat.inc
+$(lib_program)(residue.o): param.inc general.inc iterat.inc
+$(lib_program)(selecv.o): param.inc general.inc iterat.inc
+$(lib_program)(setup.o): param.inc symm.inc general.inc memory.inc iterat.inc mempoint.inc
+$(lib_program)(shuffle.o): param.inc symm.inc general.inc mempoint.inc files.inc
+$(lib_program)(trail.o): param.inc general.inc iterat.inc symm.inc files.inc
+$(lib_program)(twolin.o): param.inc general.inc files.inc
+$(lib_program)(userin.o): param.inc general.inc symm.inc files.inc
+$(lib_program)(userout.o): param.inc symm.inc general.inc memory.inc iterat.inc mempoint.inc files.inc
+$(lib_program)(vertex.o): param.inc symm.inc general.inc
+$(lib_program)(wrivec.o): param.inc general.inc files.inc iterat.inc 

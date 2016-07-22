@@ -1,0 +1,176 @@
+C
+C     ==================
+      SUBROUTINE MFDENSI(DAAR,FAAR,SC1,SC2,SC3,SC4,SC5,SC6)
+C     ==================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     GET DENSITY MATRICES FROM STARTVECTORS (IF PRESENT)
+C
+      INCLUDE 'paracom.inc'
+      INCLUDE 'general.inc'
+C
+      REAL*8 DAAR(*),FAAR(*)
+      REAL*8 SC1(*),SC2(*),SC3(*),SC4(*),SC5(*),SC6(*)
+C
+      CHARACTER*80 TITLE
+      EQUIVALENCE (TITLE,FORMAT)
+      COMPLEX*16 VMO (N22 * 2)
+      LOGICAL EXIST, GENVEC
+      CHARACTER*80 CARD
+      INTEGER IPRTNR(17)
+C
+C     ------------------------------------------------
+C     TRY TO READ FORMATTED START VECTORS FROM MFDVECA
+C     ------------------------------------------------
+C
+      OPEN(MFDSYMC,FILE=FNAM(4),FORM='UNFORMATTED',STATUS='OLD',
+     +             ERR=10040)
+      REWIND(MFDSYMC)
+      OPEN(MFDVECA,FILE=FNAM(9),FORM='FORMATTED',STATUS='OLD',
+     +             ERR=30)
+      REWIND(MFDVECA)
+C
+      READ (MFDVECA,1000,END=30,ERR=30) TITLE
+      READ (MFDVECA,1005,END=30,ERR=30) D0,T0
+      READ (MFDVECA,'(I4)',END=30,ERR=30) ICYCLS
+      READ (MFDVECA,1007,END=30,ERR=30) ETOTAL,EPREV,
+     +                                  EMDIF,WDIFP,TOTDIF
+      WDIF = WDIFP
+      KCYCLS = 0
+      WRITE(*,1010) FNAM(9),TITLE,D0,T0,ICYCLS,ETOTAL,EPREV,EMDIF,
+     +              WDIFP,TOTDIF
+C
+      LENREC=8 * MAX0(4*(NL+NS)+4,80)
+      OPEN(MFDVECB,FILE=FNAM(2),ACCESS='DIRECT',
+     +     RECL=LENREC)
+C
+      WRITE(MFDVECB,REC=1) MAX0(4*(NL+NS)+4,80),D0,T0,ICYCLS,KCYCLS,
+     +                     ETOTAL,EPREV,EMDIF,WDIFP,TOTDIF
+      WRITE(MFDVECB,REC=2) SCFTXT
+      READ (MFDVECA,1000,END=10000) CARD
+      READ (CARD, 1001, ERR=10000) FORMAT
+      IF (FORMAT.EQ.' ') FORMAT='(6F22.16)'
+      MVBREC = 2
+      GENVEC = .FALSE.
+      READ (MFDVECA,'(I4)',ERR=30,END=30) NSYMRP
+      READ (MFDVECA,'(16I4)',ERR=30,END=30) (IPRTNR(I),I=1,NSYMRP)
+      READ (MFDVECA,'(16I4)',ERR=30,END=30) (IPRTNR(I),I=1,NSYMRP)
+C
+      IPRTNR(1)=0
+      DO 19 IRP=1,NSYMRP
+  19     IPRTNR(IRP+1)=IAVIRP(IRP)
+      DO 20 IRP=1,NSYMRP
+        IF (GENVEC) THEN
+          NBSM = NBSIM1 (IRP)
+        ELSE
+          NBSM = NBSIM (IRP)
+        ENDIF
+        IF (IPRTNR(IRP+1).NE.IPRTNR(IRP))
+     +        READ (MFDVECA, 1008) IDUM,NSPINOR,IDUM
+        DO 10 MO=1,NOC(IRP)
+	   IF (IPRTNR(IRP+1).EQ.IPRTNR(IRP)) THEN
+	       NRECORD=MVBREC-NOC(IRP)+1
+               READ(MFDVECB,REC=NRECORD) IDUM,IDUM,IDUM,DUM,
+     +                                  (VMO(I),I=1,NBSM)
+	          ALLEW(IRP,MO)=ALLEW(IRP-1,MO)
+	    ELSE
+              READ (MFDVECA, 1004) ALLEW (IRP, MO)
+              READ (MFDVECA, FORMAT, END = 410, ERR = 410)
+     +             (VMO (I), I = 1, NBSM)
+              GOTO 420
+ 410          IF (TWOC .OR. GENVEC) GOTO 10010
+              NBSM = NBSIM1 (IRP)
+              REWIND (MFDVECA)
+	      DO 411 I=1,10
+ 411             READ (MFDVECA, 1000) CARD
+              READ (MFDVECA,FORMAT,END=10010) (VMO(I),I=1,NBSM)
+              ITER0 = .TRUE.
+              GENVEC = .TRUE.
+ 420          CONTINUE
+	    ENDIF
+          MVBREC=MVBREC+1
+#if defined (BIT64)
+          WRITE(MFDVECB,REC=MVBREC) INDSRP(IRP),IRP,NBSM,0.0,
+#else
+          WRITE(MFDVECB,REC=MVBREC) INDSRP(IRP),IRP,NBSM,0.0D0,
+#endif
+     +                              (VMO(I),I=1,NBSM)
+   10  CONTINUE
+	   IF (IPRTNR(IRP+1).NE.IPRTNR(IRP)) THEN
+           DO 11 MO=NOC(IRP)+1,NSPINOR
+              READ (MFDVECA, 1004) RDUM              
+	      READ (MFDVECA,FORMAT,END=10010) (VMO(I),I=1,NBSM)
+   11      CONTINUE
+	   ENDIF
+   20 CONTINUE
+C
+      CLOSE(MFDVECA)
+      IF (GENVEC) CALL TWOSTRT(SC1,SC2,SC3,SC4,SC5,SC6)
+      CLOSE(MFDVECB)
+      CALL MFDENSS(DAAR,FAAR)
+      RETURN
+C
+   30 CLOSE(MFDVECA)
+C
+C     ---------------------------------------
+C     CHECK BINARY START VECTORS FROM MFDVECB
+C     ---------------------------------------
+C
+      LENREC=8 * MAX0(4*(NL+NS)+4,80)
+      INQUIRE ( FILE = FNAM(2) , EXIST = EXIST )
+      IF ( .NOT. EXIST ) GOTO 40
+C
+      OPEN(MFDVECB,FILE=FNAM(2),ACCESS='DIRECT',
+     +     RECL=LENREC)
+C
+      READ (MFDVECB,REC=1,ERR=40) IDUM,D0,T0,ICYCLS,KCYCLS,ETOTAL,
+     +                            EPREV,EMDIF,WDIFP,TOTDIF
+      WDIF = WDIFP
+      READ (MFDVECB,REC=2,ERR=40) TITLE
+C
+      ITER0=.FALSE.
+      WRITE(*,1010) FNAM(2),TITLE,D0,T0,ICYCLS,ETOTAL,EPREV,EMDIF,
+     +              WDIFP,TOTDIF
+      WRITE(MFDVECB,REC=2) SCFTXT
+C
+      FORMAT='(6F22.16)'
+      CLOSE (MFDVECB)
+      CALL MFDENSS(DAAR,FAAR)
+      RETURN
+C
+C     ----------------------------
+C     NO VALID START VECTORS FOUND
+C     ----------------------------
+C
+   40 CONTINUE
+      WRITE(*,1020)
+      FIRST=.TRUE.
+      ITER0=.FALSE.
+C
+      OPEN(MFDVECB,FILE=FNAM(2),ACCESS='DIRECT',
+     +     RECL=LENREC)
+      WRITE(MFDVECB,REC=2) SCFTXT
+      CLOSE(MFDVECB)
+      RETURN
+ 1000 FORMAT(A)
+ 1001 FORMAT(20A)
+ 1004 FORMAT(10X,G20.10)
+ 1005 FORMAT(2A10)
+ 1007 FORMAT(5G20.10)
+ 1008 FORMAT(I4,26X,I4,I4)
+ 1010 FORMAT(//' TRIAL VECTORS TAKEN FROM FILE ',A7//
+     $         ' FILE HEADING : ',A/
+     $         ' SCF RUN DATE : ',A10/
+     $         ' SCF RUN TIME : ',A8//
+     $         ' RESTART VALUES FROM FILE : '/
+     $         ' CYCLE COUNT ',T25,I20/
+     $         ' ETOTAL',T25,G20.10/
+     $         ' EPREV ',T25,G20.10/
+     $         ' EMDIF',T25,G20.10/
+     $         ' WDIF ',T25,G20.10/
+     $         ' TOTDIF',T25,G20.10)
+ 1020 FORMAT(//' NO TRIAL VECTORS FOUND; ZERO START'//)
+10000 CALL Q2JOB(1,'FORMAT CARD (FROM MFDVECA)',' ',0)
+10010 CALL Q2JOB(1,'START VECTOR (FROM MFDVECA)',' ',0)
+10040 CALL Q2JOB(2,'FILE MFDSYMC CANNOT BE ACCESSED',' ',0)
+      END

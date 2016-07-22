@@ -1,0 +1,46 @@
+
+
+ ********************************
+ * INTEGRAL PROGRAM "RELTWEL"   *
+ * VERSION  5.1                 *
+ * DATE 02/13/98                *
+ * TIME 11:18:55                *
+ ********************************
+
+
+
+
+ NAMELIST GENERAL            TWOC :         T
+
+
+ NAMELIST RELTWEL            COUNT :        F
+                             DNORM :           32.0000    
+
+                             ENORM LL:        0.100000E-11
+                             ICR :             1
+                             ICMX :            1
+                             ICORE :           0
+
+
+
+
+
+
+ CALCULATING TWO ELECTRON INTEGRALS 
+
+           (LL/LL)       (SS/LL)        (SS/SS)       (SL/SL)
+ TOTAL     1274406             0              0             0
+
+
+ (LL/LL) INTEGRALS COMPLETED    NON-ZERO(SYMM.)  ABOVE THRESHOLD    CPU TIME
+         CALCULATED THIS RUN         94038            72280          1.8851
+
+
+ TWO ELECTRON INTEGRALS COMPLETED
+
+
+Time in spdfg     1.415 seconds
+Time in 4-ind     0.088 seconds
+Time in distr     0.267 seconds
+
+ Maximum memory used :5425 8-Byte words

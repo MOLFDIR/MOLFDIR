@@ -1,0 +1,20 @@
+C
+      SUBROUTINE HMFUNS (KLPRIM,HM,MSUM)
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+      DIMENSION HM(KLPRIM,0:12),MSUM(4)
+C
+      DO 300 KT = 1, 3
+      MSKT = MSUM(KT)
+      MMAX = MSUM(KT+1) - MSKT - 1
+      MMAX = MMAX
+      IF (MMAX.GE.1) THEN
+      DO 200 M = 1, MMAX, 2
+      DO 100 KL = 1, KLPRIM
+      HM(KL,M+MSKT) = - HM(KL,M+MSKT)
+  100 CONTINUE
+  200 CONTINUE
+      ENDIF
+  300 CONTINUE
+      RETURN
+      END

@@ -1,0 +1,33 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(addone.o): param.inc common.inc
+$(lib_program)(densn.o): param.inc common.inc
+$(lib_program)(denss.o): param.inc common.inc densfock.inc
+$(lib_program)(fock.o): param.inc
+$(lib_program)(gaunt.o): param.inc
+$(lib_program)(mfd4inp.o): param.inc common.inc mpidef.inc
+$(lib_program)(mfdata4.o): param.inc
+$(lib_program)(mfdbreit.o): param.inc common.inc densfock.inc
+$(lib_program)(mfdbreit.par.o): param.inc common.inc densfock.inc mpidef.inc
+$(lib_program)(mfdbslv.o): param.inc common.inc densfock.inc mpidef.inc
+$(lib_program)(mfddriv.o): param.inc common.inc memory.inc densfock.inc mpidef.inc
+$(lib_program)(mfdensi.o): param.inc common.inc mpidef.inc
+$(lib_program)(mfdensn.o): param.inc common.inc mpidef.inc densfock.inc
+$(lib_program)(mfdenss.o): param.inc common.inc mpidef.inc densfock.inc
+$(lib_program)(mfdfmcp.o): param.inc common.inc
+$(lib_program)(mfdfock.o): param.inc common.inc densfock.inc
+$(lib_program)(mfdfock.par.o): param.inc common.inc densfock.inc mpidef.inc
+$(lib_program)(mfdfslv.o): param.inc common.inc densfock.inc mpidef.inc
+$(lib_program)(mfdpoef.o): param.inc common.inc
+$(lib_program)(mfdprop.o): param.inc common.inc densfock.inc
+$(lib_program)(mfdtabl.o): param.inc common.inc memory.inc mpidef.inc
+$(lib_program)(mfdtran.o): param.inc common.inc densfock.inc
+$(lib_program)(mfdtrce.o): param.inc common.inc
+$(lib_program)(readint.o): param.inc
+$(lib_program)(scfdat.o): param.inc common.inc
+$(lib_program)(tmoone.o): param.inc common.inc mpidef.inc
+$(lib_program)(trmat.o): param.inc common.inc densfock.inc
+

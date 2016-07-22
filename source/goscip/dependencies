@@ -1,0 +1,20 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(ci.o): param.inc general.inc
+$(lib_program)(diagh.o): param.inc general.inc common.inc 
+$(lib_program)(gendet.o): param.inc general.inc
+$(lib_program)(hmat.o): param.inc general.inc common.inc
+$(lib_program)(init.o): param.inc general.inc common.inc
+$(lib_program)(irpdet.o): param.inc general.inc
+$(lib_program)(makeh.o): param.inc general.inc common.inc
+$(lib_program)(nbits.o): param.inc general.inc
+$(lib_program)(phase.o): param.inc general.inc
+$(lib_program)(prtout.o): param.inc general.inc common.inc
+$(lib_program)(rdtwo.o): param.inc general.inc common.inc
+$(lib_program)(readin.o): param.inc general.inc common.inc
+$(lib_program)(sortew.o): param.inc
+$(lib_program)(wrvec.o): param.inc general.inc common.inc
+

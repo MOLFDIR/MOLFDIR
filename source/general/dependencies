@@ -1,0 +1,7 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(q2job.par.o): mpidef.inc
+

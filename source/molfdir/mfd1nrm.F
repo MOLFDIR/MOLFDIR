@@ -1,0 +1,214 @@
+C
+C     ==================
+      SUBROUTINE MFD1NRM
+C     ==================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     ORGANIZE THE NORMALIZATION OF THE GAUSSIAN BASISFUNCTIONS, OF THEI
+C     LINEAR COMBINATION TO CONTRACTED GAUSSIANS, AND OF THE SYMMETRY
+C     ADAPTED LINEAR COMBINATIONS OF THESE CONTRACTED GAUSSIANS.
+C
+      INCLUDE 'paracom.inc' 
+C
+      COMMON/GROUPR/PROJOP(96,16),UU(4,2,48)
+C
+      DIMENSION S(N3,N3)
+C
+C     NORMALIZE BASISFUNCTIONS
+C
+      DO 5 I=1,NSUBSP
+      NBSYM(I)=0
+      NBSYMX(I,1)=0
+      NBSYMX(I,2)=0
+    5 CONTINUE
+      ICTB = 0
+      LCTB=0
+      INDSYM(1)=0
+      NCTB=0
+      INDORB(1)=0
+      NE = 0
+      DO 140 IC=1,2
+      ND=NE+1
+      NE=NEQ(IC)
+      DO 130 IM=ND,NE
+      ICT = ICTB
+      ICTA = ICTB + 1
+      ICTB = INDBAS(IM+1)
+      ITA=KCOMB(IM)
+      KCT=INDCOM(ITA+1)
+      IT=ITYPE(KCT)
+      NTX = NX(IT) + 1
+      NTY = NY(IT) + 1
+      NTZ = NZ(IT) + 1
+      NT  = NTX + NTY +NTZ - 3
+C
+C     ------------------------------------------------------------------
+C     CALCULATE THE NORM OF EACH GAUSSIAN IN THE CONTRACTED FUNCTION 'IM
+C     AND PUT THE NORM IN 'XNORM(.)'. CALCULATE ALSO THE OVERLAPINTEGRAL
+C     OF ALL THE GAUSSIANS IN THE CONTRACTION (THEY HAVE A COMMON CENTER
+C     ------------------------------------------------------------------
+C
+      IF (ICTB-ICT.GT.N3) CALL Q2JOB(3,'P.MFD1NRM S','N3',ICTB-ICT)
+      DO 20  I= ICTA,ICTB
+      IT = I - ICT
+      A = ALPHA(I)
+      DO 10 K=ICTA,I
+      KT = K - ICT
+      B = ALPHA(K)
+#if defined (BIT64)
+      ABI = 1.0/(A+B)
+#else
+      ABI = 1.D0/(A+B)
+#endif
+      CNORM = PI*ABI
+#if defined (BIT64)
+      SINT = SQRT(CNORM)*CNORM*FFACT(NTX)*FFACT(NTY)*FFACT(NTZ)*ABI**NT
+#else
+      SINT = DSQRT(CNORM)*CNORM*FFACT(NTX)*FFACT(NTY)*FFACT(NTZ)*ABI**NT
+#endif
+      CINT = SINT*COEFF(I)*COEFF(K)
+      S(IT,KT) = CINT
+      S(KT,IT) = CINT
+   10 CONTINUE
+C     Calculate norm for use with HERMIT integrals
+#if defined (BIT64)
+      XNORM(I) = SQRT(1.0/SINT)
+      HFACT =  SQRT((2.00**NT)*FFACT(NTX)*FFACT(NTY)*FFACT(NTZ))
+#else
+      XNORM(I) = DSQRT(1.D0/SINT)
+      HFACT = DSQRT((2.D0**NT)*FFACT(NTX)*FFACT(NTY)*FFACT(NTZ))
+#endif
+      COEFFH(I) = COEFF(I) / HFACT
+   20 CONTINUE
+C
+C     ----------------------------------------------------------------
+C     CALCULATE THE NORM OF THE CONTRACTED FUNCTION 'IM' AND SCALE ALL
+C     THE CONTRACTION COEFFICIENTS WITH THIS NORM. THESE CONTRACTION
+C     COEFFICIENTS, MULTIPLIED WITH THEIR NORMALIZED GAUSSIAN WILL SUM
+C     UP TO A NORMALIZED CONTRACTION
+C     ----------------------------------------------------------------
+C
+      CSUM=0.0D0
+      DO 40 I=ICTA,ICTB
+      IT=I-ICT
+      DO 30 K=ICTA,ICTB
+      KT=K-ICT
+      CSUM=CSUM+XNORM(I)*S(IT,KT)*XNORM(K)
+   30 CONTINUE
+   40 CONTINUE
+#if defined (BIT64)
+      CSUM=SQRT(1.0/CSUM)
+#else
+      CSUM=DSQRT(1.D0/CSUM)
+#endif
+      DO 50 I=ICTA,ICTB
+      COEFF(I)=COEFF(I)*CSUM
+      COEFFH(I)=COEFFH(I)*CSUM
+   50 CONTINUE
+C
+C     ---------------------------------------------------------------
+C     CALCULATE ALL OVERLAPINTEGRALS BETWEEN THE CONTRACTED GAUSSIANS
+C     THAT BELONG TO THE GROUP OF SYMMETRY EQUIVALENT ORBITALS (OF
+C     WHICH THE ACTUAL FUNCTION 'IM' IS THE PROTOTYPE)
+C     ---------------------------------------------------------------
+C
+      KCT=INDCOM(ITA)
+      KCTA=KCT+1
+      KCTB=INDCOM(ITA+1)
+      NBAS=KCTB-KCT
+      DO 70 I=KCTA,KCTB
+      IT=I-KCT
+      ICENTA=ICENT(I)
+      ITYPA =ITYPE(I)
+      DO 60 K=KCTA,I
+      KT=K-KCT
+      ICENTB=ICENT(K)
+      ITYPB =ITYPE(K)
+      CALL MFDSINT
+      S(IT,KT)=SINT
+      S(KT,IT)=SINT
+   60 CONTINUE
+   70 CONTINUE
+      NCT=NSYMC(ITA)
+      MCT=2*INDSC(ITA)
+      MCTA=MCT+1
+      MCTB=INDSOR(MCTA)
+      DO 120 I=1,NCT
+      LCTB=LCTB+1
+      NCTA=NCTB+1
+      IF (NCTB+NBAS.GT.N10) CALL Q2JOB(3,'P.MFD1NRM_ITRAN CTRANA/B',
+     $'N10',NCTB+NBAS)
+      DO 80 K=KCTA,KCTB
+      NCTB=NCTB+1
+      MCTB=MCTB+1
+      ITRAN(NCTB)=K
+      CTRANA(NCTB)=CSYMORA(MCTB)
+      CTRANB(NCTB)=CSYMORB(MCTB)
+   80 CONTINUE
+      IF (LCTB.GT.N12) CALL Q2JOB(3,'P.MFD1NRM_INDORB','N12',LCTB)
+      INDORB(LCTB+1)=NCTB
+      CSUMA=0.0D0
+      CSUMB=0.0D0
+      KT=0
+      DO 100 K=NCTA,NCTB
+      KT=KT+1
+      LT=0
+      DO 90 L=NCTA,NCTB
+      LT=LT+1
+#if defined (BIT64)
+      CSUMA=CSUMA + REAL (CTRANA(K)*CONJG(CTRANA(L)) )*S(KT,LT)
+      CSUMB=CSUMB + REAL (CTRANB(K)*CONJG(CTRANB(L)) )*S(KT,LT)
+#else
+      CSUMA=CSUMA + DREAL (CTRANA(K)*DCONJG(CTRANA(L)) )*S(KT,LT)
+      CSUMB=CSUMB + DREAL (CTRANB(K)*DCONJG(CTRANB(L)) )*S(KT,LT)
+#endif
+   90 CONTINUE
+  100 CONTINUE
+      CSUMA=CSUMA+CSUMB
+#if defined (BIT64)
+      CSUMA=SQRT(1.0/CSUMA)
+#else
+      CSUMA=DSQRT(1.D0/CSUMA)
+#endif
+      CSUMB=CSUMA
+      DO 110 K=NCTA,NCTB
+#if defined (BIT64)
+      CTRANA(K)=CMPLX(CSUMA)*CTRANA(K)
+      CTRANB(K)=CMPLX(CSUMB)*CTRANB(K)
+#else
+      CTRANA(K)=DCMPLX(CSUMA)*CTRANA(K)
+      CTRANB(K)=DCMPLX(CSUMB)*CTRANB(K)
+#endif
+  110 CONTINUE
+      WRITE(15) (CTRANA(N),CTRANB(N),N=NCTA,NCTB)
+      MCT=MCT+1
+      M=IRPSOR(MCT)
+      KSYMRP(LCTB)=M
+      INDB(LCTB)=IM
+      NBSYMX(M,IC)=NBSYMX(M,IC)+1
+      NBSYM(M)=NBSYM(M)+1
+      LSYMRP(LCTB)=NBSYM(M)
+  120 CONTINUE
+      INDSYM(IM+1)=LCTB
+  130 CONTINUE
+  140 CONTINUE
+      NCOEFF=NCTB
+      NSYMF=LCTB
+      DO 160 I=1,NSYMF
+      KSI=KSYMRP(I)-1
+      LSI=LSYMRP(I)
+      NB=0
+      DO 150 K=1,KSI
+      NB=NB+NBSYM(K)
+  150 CONTINUE
+      KSYMF(NB+LSI)=I
+  160 CONTINUE
+C
+C     -------------------
+C     FINISH FILE MFDSYMC
+C     -------------------
+C
+      WRITE(15) (((UU(I,J,IOP),I=1,4),J=1,2),IOP=1,NSYMOP)
+      WRITE(15)  ((ICOMOP(I,J),J=1,NSYMOP),I=1,NCO(2))
+      RETURN
+      END

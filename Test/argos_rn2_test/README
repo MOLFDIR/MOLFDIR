@@ -1,0 +1,12 @@
+To test the ECP / SO code and it's connection to MOLFDIR 
+run the following sequence:
+
+1. argos1e.x
+2. cnvrt1e.x
+3. molfdir.x < MOLFDIR.INP
+4. relonel.x < MOLFDIR.INP
+5. reltwel.x < MOLFDIR.INP
+6. mfdscf.x < MOLFDIR.INP
+
+The output directory contains the reference output. It also
+contains output for correlated (CCSD) results.

@@ -1,0 +1,10 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(init.o): paracom.inc     
+$(lib_program)(popan.o): paracom.inc     
+$(lib_program)(populat.o): paracom.inc     
+$(lib_program)(readin.o): paracom.inc     
+

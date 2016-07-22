@@ -1,0 +1,102 @@
+C
+      SUBROUTINE USERIN
+C
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+      INCLUDE 'param.inc'
+      INCLUDE 'files.inc'
+      INCLUDE 'general.inc'
+      INCLUDE 'symm.inc'
+C
+      LOGICAL TOBE
+      CHARACTER*4 IREPNA,VECFIL*11
+C
+      NAMELIST /RASORB/ NELEC,NORBR,MAXH1,MAXE3
+      NAMELIST /DIRECT/ MAXITER,CPUMAX,CONVERR,CONVERE,RESTART
+      NAMELIST /CIROOT/ NROOTS,NSEL,SELECT,IREPNA,ISTART
+      NAMELIST /OPTIM/ IGENEX
+      NAMELIST /LEADDET/ GETDET,COMIN
+      NAMELIST /NATURAL/ MAKENAT
+C
+      OPEN (5, FILE='MOLFDIR.INP', FORM='FORMATTED')
+      NELEC = 0
+      NORBR(1) = 0
+      NORBR(2) = NORB
+      NORBR(3) = 0
+      MAXH1 = 0
+      MAXE3 = 0
+      CALL LOCATE('RASORB',6,ITEST)
+      IF (ITEST.GT.0) READ (5,RASORB)
+      MAXITER = MIN0(10,N2-1)
+      IF (NORBR(1).EQ.0) MAXH1=0
+      IF (NORBR(3).EQ.0) MAXE3=0
+      RESTART = .FALSE.
+      CPUMAX = 604800.D0
+      CONVERR = 1.D-10
+      CONVERE = 1.D-9
+      CALL LOCATE('DIRECT',6,ITEST)
+      IF (ITEST.GT.0) READ (5,DIRECT)
+      SELECT = .FALSE.
+      NROOTS = 1
+      DO 210 ISEL = 1, N8
+         NSEL(ISEL) = ISEL
+  210    CONTINUE
+C     --------------------------------------
+C     FIND SUITABLE DEFAULT ABELIAN SYMMETRY
+C     --------------------------------------
+      IF (MOD(NELEC,2).EQ.0) THEN
+         IREP1 = IRA1
+         IREP2 = NREP
+      ELSE
+         IREP1 = 1
+         IREP2 = IRA1 - 1
+      ENDIF
+      DO 220 IREP = IREP1, IREP2
+         VECFIL = FNAM(4)(1:6)//'_'//REPNA(IREP)
+         IF (VECFIL(8:8).EQ.'''') VECFIL(8:8) = '1'
+         IF (VECFIL(8:8).EQ.'"') VECFIL(8:8) = '2'
+#if defined (BIT64)
+         OPEN (MRCTRIV,FILE=VECFIL,ACCESS='DIRECT',RECL=8,ERR=220)
+#else
+         OPEN (MRCTRIV,FILE=VECFIL,ACCESS='DIRECT',RECL=4,ERR=220)
+#endif
+         IOS = 0
+         READ (MRCTRIV,REC=1,ERR=220,IOSTAT=IOS) LENREC
+         IF (IOS.NE.0) GOTO 220
+         TOBE = .TRUE.
+         IF (TOBE) GOTO 221
+  220    CONTINUE
+C     -------------------------------------------------------------
+C     NO TRIAL VECTORS FOUND : TAKE FIRST REPRESENTATION AS DEFAULT
+C     -------------------------------------------------------------
+      IREP = IREP1
+  221 CONTINUE
+      IREPNA = REPNA(IREP)
+      ISTART=1
+      CALL LOCATE('CIROOT',6,ITEST)
+      IF (ITEST.GT.0) READ (5,CIROOT)
+      IF (IREPNA(1:1).EQ.'1') IREPNA(1:1) = ''''
+      IF (IREPNA(1:1).EQ.'2') IREPNA(1:1) = '"'
+      DO 310 IREP = IREP1, IREP2
+         IF (REPNA(IREP).EQ.IREPNA) GOTO 311
+  310 CONTINUE
+      CALL Q2JOB (2,'REPRESENTATION NOT SPANNED',' ',0)
+  311 CONTINUE
+      NORBRT = NORBR(1) + NORBR(2) + NORBR(3)
+      IGENEX = 2
+      CALL LOCATE('OPTIM',5,ITEST)
+      IF (ITEST.GT.0) READ (5,OPTIM)
+      GETDET=.TRUE.
+      COMIN=0.1D0
+      CALL LOCATE('LEADDET',7,ITEST)
+      IF (ITEST.GT.0) READ (5,LEADDET)
+      MAKENAT=.TRUE.
+      CALL LOCATE('NATURAL',7,ITEST)
+      IF (ITEST.GT.0) READ (5,NATURAL)
+      IF (NORBRT.NE.NORB) CALL Q2JOB (2,'SUM(NORBR).NE.NORB',' ',0)
+      IF (NELEC.EQ.0)     CALL Q2JOB (2,'NELEC.EQ.0',' ',0)
+      IF (NELEC.GT.NORB)  CALL Q2JOB (2,'NELEC.GT.NORB',' ',0)
+      IF (NELEC.GT.N4)    CALL Q2JOB (3,'P.USERIN','N4',NELEC)
+      IF (NROOTS.GT.N8)   CALL Q2JOB (3,'P.USERIN','N8',NROOTS)
+      RETURN
+      END

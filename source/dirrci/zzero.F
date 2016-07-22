@@ -1,0 +1,13 @@
+C
+      SUBROUTINE ZZERO (LV,VECTOR)
+C
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+      REAL*8 VECTOR (LV)
+C
+      DO 100 I = 1, LV
+      VECTOR (I) = 0.D0
+  100 CONTINUE
+C
+      RETURN
+      END

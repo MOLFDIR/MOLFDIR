@@ -1,0 +1,23 @@
+      PROGRAM PROPAN
+
+      IMPLICIT REAL*8 (A-H, O-Z)
+
+      EXTERNAL INIT
+
+C
+C     ====================================
+C     PERFORM POPULATION ANALYSIS
+C     FIRST VERSION WRITTEN BY L. VISSCHER
+C     THEORETICAL CHEMISTRY DEPARTMENT,
+C     UNIVERSITY OF GRONINGEN (RUG),
+C     NIJENBORGH 4, 9747 AG GRONINGEN
+C     THE NETHERLANDS
+C     ====================================
+C
+      CALL READIN
+      CALL POPULAT
+      CALL POPAN
+      WRITE (6,1000)
+C
+ 1000 FORMAT (//5x,'Normal end of program')
+      END

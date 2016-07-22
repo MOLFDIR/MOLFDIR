@@ -1,0 +1,15 @@
+C
+C     ==========================
+      SUBROUTINE LSHIFTC(N,NAME)
+C     ==========================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     DELETE TRAILING BLANKS FROM A CHARACTER STRING BY SHIFTING
+C     THE STRING TO THE LEFT AND FILLING RIGHT WITH BLANKS
+C
+      CHARACTER NAME*(*)
+      DO 10 I=1,N
+      IF (NAME(1:1).EQ.' ') NAME = NAME(2:)//' '
+   10 CONTINUE
+      RETURN
+      END

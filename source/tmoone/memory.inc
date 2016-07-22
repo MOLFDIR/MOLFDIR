@@ -1,0 +1,8 @@
+C
+C     DEFINITION MEMORY POINTERS TMOONE
+C
+      COMMON/MEM/IFAA,
+     $           IP1, IP2, IP3, IP4, IP5, IP6, IP7, IP8, IP9, IP10,
+     $           IP11, IS1, IS2, ID1, ID2, ID3, ID4, ID5, ID6,
+     $           ID7, ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15,
+     $           IPR1, IPR2, IPR3, IPR4,IPR5, IPR6

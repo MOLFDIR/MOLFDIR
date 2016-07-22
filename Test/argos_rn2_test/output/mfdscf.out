@@ -1,0 +1,849 @@
+1R E L A T I V I S T I C    M O L E C U L A R    S C F    P R O G R A M
+                                 V E R S I O N  1.24      
+
+
+
+ Rn2                                                                             
+ Rn2                                                                             
+
+ INITIAL RUN         02/13/98      11:18:55 V : 2.5.3     
+ INTEGRAL RUN 1 EL.  02/13/98      11:18:55 V :  2.5      
+ INTEGRAL RUN 2 EL.   UNDEF.        UNDEF.  V :  UNDEF.   
+ TODAY IS            02/13/98      11:18:58
+
+
+ EXTRAPOLATION TYPE                    NONE   
+ STARTS AT ITERATION                    ****
+ VECTOR SELECTION (T/F)                     F
+ MAX. ITERATIONS                          150
+ SPEED OF LIGHT                 137.03599    
+ VECTOR CONV.CRIT.                    0.1E-09
+ THRESHOLD FOR LIN. DEPENDENCE        0.1E-11
+ TWO COMPONENTS CALC (T/F)                  T
+ USE RESTRICTED KINETIC BALANCE             F
+ ADD TWO-E INTERACTION IN                   0 CYCLES
+ # OF COULOMB TWO-E FILES USED              1
+ BREIT CORRECTION VARIATIONALLY             F
+
+
+
+ ORBITAL CONFIGURATION TABLE 
+
+
+
+ MAIN GROUP IDENTIFIER     E1G  E1G  E2G  E2G  E1U  E1U  E2U  E2U 
+ SUBGROUP   IDENTIFIER     'E1G "E1G 'E2G "E2G 'E1U "E1U 'E2U "E2U
+ LARGE COMPONENT BASIS     16   16   10   10   16   16   10   10
+ SMALL COMPONENT            0    0    0    0    0    0    0    0
+ NUMBER OF CLOSED SHELLS    3    3    1    1    3    3    1    1
+ NUMBER OF OPEN SHELL  1    0    0    0    0    0    0    0    0
+ OCCUPATION OPEN SHELL 1  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ NUMBER OF OPEN SHELL  2    0    0    0    0    0    0    0    0
+ OCCUPATION OPEN SHELL 2  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+
+
+ NO TRIAL VECTORS FOUND; ZERO START
+
+
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -4.597832   4.59783181      .695256319      NORMAL CONVERGENCE                                       
+  1    2      -4.089669   4.08966876      .591386473      NORMAL CONVERGENCE                                       
+  1    3      -3.811116   3.81111558      .568386912      NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -3.795523   3.79552269      .719189435      NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -4.599201   4.59920127      .692471227      NORMAL CONVERGENCE                                       
+  5    2      -4.089748   4.08974848      .590764629      NORMAL CONVERGENCE                                       
+  5    3      -3.809951   3.80995119      .566334624      NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -3.795490   3.79548957      .719081248      NORMAL CONVERGENCE                                       
+
+
+ ITERATION   1: TOTAL ENERGY =        -27.615097607968      
+
+
+
+
+ ITERATION   1 VECT DIF0.71918944     ORB EN DIF 4.5992013     EN DIF0.100000000E+11 TOT EN -27.6150976    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -0.794264   3.80356827      .152564882      NORMAL CONVERGENCE                                       
+  1    2      -0.312124   3.77754474      .143391555      NORMAL CONVERGENCE                                       
+  1    3      -0.126908   3.68420804      .227938890      NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.127263   3.66825987      .318378377      NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -0.794021   3.80517989      .161629568      NORMAL CONVERGENCE                                       
+  5    2      -0.311005   3.77874336      .153826423      NORMAL CONVERGENCE                                       
+  5    3      -0.118715   3.69123601      .183724676      NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.128703   3.66678653      .278972584      NORMAL CONVERGENCE                                       
+
+
+ ITERATION     2 :    CONVERGENCE :   0.97E-01
+
+
+ ITERATION   2: TOTAL ENERGY =        -29.284215106964      
+
+
+
+
+ ITERATION   2 VECT DIF0.31837838     ORB EN DIF 3.8051799     EN DIF 1.66911750     TOT EN -29.2842151    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.081836   .287572411      .607263936E-01  NORMAL CONVERGENCE                                       
+  1    2      -0.597310   .285186264      .487159834E-01  NORMAL CONVERGENCE                                       
+  1    3      -0.378863   .251955144      .538466371E-01  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.372235   .244972158      .541747439E-01  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.081188   .287166433      .908314561E-01  NORMAL CONVERGENCE                                       
+  5    2      -0.595892   .284886916      .724001626E-01  NORMAL CONVERGENCE                                       
+  5    3      -0.367222   .248506366      .627450200E-01  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.374729   .246026143      .100954844E-01  NORMAL CONVERGENCE                                       
+
+
+ ITERATION     3 :    CONVERGENCE :   0.96E-02
+
+
+ ITERATION   3: TOTAL ENERGY =        -29.311813842197      
+
+
+
+
+ ITERATION   3 VECT DIF0.90831456E-01 ORB EN DIF0.28757241     EN DIF0.275987352E-01 TOT EN -29.3118138    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.062473   .193627712E-01  .356688013E-01  NORMAL CONVERGENCE                                       
+  1    2      -0.581569   .157410498E-01  .283963000E-01  NORMAL CONVERGENCE                                       
+  1    3      -0.362914   .159488767E-01  .223148190E-01  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.357146   .150885282E-01  .189790735E-01  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.061985   .192030044E-01  .350888846E-01  NORMAL CONVERGENCE                                       
+  5    2      -0.580175   .157170296E-01  .271363091E-01  NORMAL CONVERGENCE                                       
+  5    3      -0.352147   .150741263E-01  .257387372E-01  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.359424   .153055702E-01  .189700295E-01  NORMAL CONVERGENCE                                       
+
+
+ ITERATION     4 :    CONVERGENCE :   0.23E-02
+
+
+ ITERATION   4: TOTAL ENERGY =        -29.314858221297      
+
+
+
+
+ ITERATION   4 VECT DIF0.35668801E-01 ORB EN DIF0.19362771E-01 EN DIF0.304437910E-02 TOT EN -29.3148582    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.066738   .426486669E-02  .139592231E-01  NORMAL CONVERGENCE                                       
+  1    2      -0.586406   .483664601E-02  .108415416E-01  NORMAL CONVERGENCE                                       
+  1    3      -0.367813   .489958846E-02  .904702420E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.361110   .396398639E-02  .669738357E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.066186   .420142533E-02  .126062683E-01  NORMAL CONVERGENCE                                       
+  5    2      -0.584996   .482081763E-02  .101835414E-01  NORMAL CONVERGENCE                                       
+  5    3      -0.356707   .455939494E-02  .929563748E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.363521   .409718776E-02  .701287619E-02  NORMAL CONVERGENCE                                       
+
+
+ ITERATION     5 :    CONVERGENCE :   0.68E-03
+
+
+ ITERATION   5: TOTAL ENERGY =        -29.315222627592      
+
+
+
+
+ ITERATION   5 VECT DIF0.13959223E-01 ORB EN DIF0.48995885E-02 EN DIF0.364406296E-03 TOT EN -29.3152226    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065380   .135817137E-02  .476333595E-02  NORMAL CONVERGENCE                                       
+  1    2      -0.585194   .121223259E-02  .363946712E-02  NORMAL CONVERGENCE                                       
+  1    3      -0.366414   .139982118E-02  .313181835E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.359884   .122670314E-02  .231757346E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.064849   .133718894E-02  .481256748E-02  NORMAL CONVERGENCE                                       
+  5    2      -0.583791   .120444139E-02  .357806863E-02  NORMAL CONVERGENCE                                       
+  5    3      -0.355447   .125938609E-02  .323939847E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362260   .126103231E-02  .233863500E-02  NORMAL CONVERGENCE                                       
+
+
+ ITERATION     6 :    CONVERGENCE :   0.24E-03
+
+
+ ITERATION   6: TOTAL ENERGY =        -29.315266836968      
+
+
+
+
+ ITERATION   6 VECT DIF0.48125675E-02 ORB EN DIF0.13998212E-02 EN DIF0.442093753E-04 TOT EN -29.3152668    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065841   .461188349E-03  .170143109E-02  NORMAL CONVERGENCE                                       
+  1    2      -0.585682   .488572425E-03  .132087505E-02  NORMAL CONVERGENCE                                       
+  1    3      -0.366931   .517106012E-03  .110470077E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360300   .415910588E-03  .825404594E-03  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065303   .453528809E-03  .171598430E-02  NORMAL CONVERGENCE                                       
+  5    2      -0.584279   .487311274E-03  .126794841E-02  NORMAL CONVERGENCE                                       
+  5    3      -0.355928   .480569154E-03  .113824002E-02  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362692   .431916248E-03  .860165875E-03  NORMAL CONVERGENCE                                       
+
+
+ ITERATION     7 :    CONVERGENCE :   0.77E-04
+
+
+ ITERATION   7: TOTAL ENERGY =        -29.315272223300      
+
+
+
+
+ ITERATION   7 VECT DIF0.17159843E-02 ORB EN DIF0.51710601E-03 EN DIF0.538633185E-05 TOT EN -29.3152722    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065684   .157311152E-03  .585053764E-03  NORMAL CONVERGENCE                                       
+  1    2      -0.585534   .148528783E-03  .448376343E-03  NORMAL CONVERGENCE                                       
+  1    3      -0.366760   .170392539E-03  .383586698E-03  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360152   .147266987E-03  .280059677E-03  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065148   .154694116E-03  .590468460E-03  NORMAL CONVERGENCE                                       
+  5    2      -0.584131   .147548121E-03  .439396026E-03  NORMAL CONVERGENCE                                       
+  5    3      -0.355776   .151889656E-03  .396003449E-03  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362540   .151668293E-03  .283730492E-03  NORMAL CONVERGENCE                                       
+
+
+ ITERATION     8 :    CONVERGENCE :   0.30E-04
+
+
+ ITERATION   8: TOTAL ENERGY =        -29.315272880800      
+
+
+
+
+ ITERATION   8 VECT DIF0.59046846E-03 ORB EN DIF0.17039254E-03 EN DIF0.657500777E-06 TOT EN -29.3152729    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065741   .568204832E-04  .207418108E-03  NORMAL CONVERGENCE                                       
+  1    2      -0.585592   .584023191E-04  .160290127E-03  NORMAL CONVERGENCE                                       
+  1    3      -0.366823   .623746936E-04  .134975474E-03  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360203   .505805951E-04  .102172770E-03  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065204   .558955868E-04  .209328768E-03  NORMAL CONVERGENCE                                       
+  5    2      -0.584189   .582415078E-04  .154448753E-03  NORMAL CONVERGENCE                                       
+  5    3      -0.355834   .582800655E-04  .139210546E-03  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362593   .525087515E-04  .106180033E-03  NORMAL CONVERGENCE                                       
+
+
+ ITERATION     9 :    CONVERGENCE :   0.93E-05
+
+
+ ITERATION   9: TOTAL ENERGY =        -29.315272961164      
+
+
+
+
+ ITERATION   9 VECT DIF0.20932877E-03 ORB EN DIF0.62374694E-04 EN DIF0.803634066E-07 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065722   .190330328E-04  .715589944E-04  NORMAL CONVERGENCE                                       
+  1    2      -0.585574   .183514757E-04  .551324175E-04  NORMAL CONVERGENCE                                       
+  1    3      -0.366802   .208804631E-04  .468056412E-04  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360185   .179251457E-04  .336237700E-04  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065185   .187109917E-04  .721924118E-04  NORMAL CONVERGENCE                                       
+  5    2      -0.584171   .182381603E-04  .538314248E-04  NORMAL CONVERGENCE                                       
+  5    3      -0.355816   .185161378E-04  .482990698E-04  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362574   .184669756E-04  .341179388E-04  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    10 :    CONVERGENCE :   0.37E-05
+
+
+ ITERATION  10: TOTAL ENERGY =        -29.315272970998      
+
+
+
+
+ ITERATION  10 VECT DIF0.72192412E-04 ORB EN DIF0.20880463E-04 EN DIF0.983391146E-08 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065729   .696812042E-05  .253124435E-04  NORMAL CONVERGENCE                                       
+  1    2      -0.585581   .707114715E-05  .194534863E-04  NORMAL CONVERGENCE                                       
+  1    3      -0.366809   .759548724E-05  .165125008E-04  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360191   .619683507E-05  .127308043E-04  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065192   .685560833E-05  .255516073E-04  NORMAL CONVERGENCE                                       
+  5    2      -0.584178   .704926677E-05  .188069220E-04  NORMAL CONVERGENCE                                       
+  5    3      -0.355823   .713021718E-05  .170321908E-04  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362580   .643309154E-05  .132155754E-04  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    11 :    CONVERGENCE :   0.11E-05
+
+
+ ITERATION  11: TOTAL ENERGY =        -29.315272972203      
+
+
+
+
+ ITERATION  11 VECT DIF0.25551607E-04 ORB EN DIF0.75954872E-05 EN DIF0.120530785E-08 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065726   .231889688E-05  .874549027E-05  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .225801286E-05  .677789499E-05  NORMAL CONVERGENCE                                       
+  1    3      -0.366807   .255562012E-05  .570442786E-05  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360189   .218174506E-05  .399751839E-05  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .227948924E-05  .882166090E-05  NORMAL CONVERGENCE                                       
+  5    2      -0.584176   .224487506E-05  .659698212E-05  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .225445818E-05  .588738744E-05  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362578   .224703037E-05  .405597214E-05  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    12 :    CONVERGENCE :   0.45E-06
+
+
+ ITERATION  12: TOTAL ENERGY =        -29.315272972352      
+
+
+
+
+ ITERATION  12 VECT DIF0.88216609E-05 ORB EN DIF0.25556201E-05 EN DIF0.148702384E-09 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .852240078E-06  .308994988E-05  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .859005979E-06  .235978974E-05  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .925953103E-06  .202206988E-05  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .759542537E-06  .160235969E-05  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .838505805E-06  .311942804E-05  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .856147906E-06  .228813401E-05  NORMAL CONVERGENCE                                       
+  5    3      -0.355822   .873884737E-06  .208497046E-05  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .788940138E-06  .166344066E-05  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    13 :    CONVERGENCE :   0.14E-06
+
+
+ ITERATION  13: TOTAL ENERGY =        -29.315272972370      
+
+
+
+
+ ITERATION  13 VECT DIF0.31194280E-05 ORB EN DIF0.92595310E-06 EN DIF0.181898940E-10 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .282887704E-06  .106868047E-05  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .277042705E-06  .833907129E-06  NORMAL CONVERGENCE                                       
+  1    3      -0.366807   .312704152E-06  .694462189E-06  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .265515062E-06  .467559270E-06  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .278075881E-06  .107791475E-05  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .275479373E-06  .809366183E-06  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .274026561E-06  .717127186E-06  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .273212713E-06  .473595858E-06  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    14 :    CONVERGENCE :   0.56E-07
+
+
+ ITERATION  14: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  14 VECT DIF0.10779147E-05 ORB EN DIF0.31270415E-06 EN DIF0.181898940E-11 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .104214052E-06  .377190170E-06  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .104587958E-06  .285878083E-06  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .112884443E-06  .247921882E-06  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .931054132E-07  .204724852E-06  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .102534990E-06  .380812477E-06  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .104233994E-06  .277948837E-06  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .107299854E-06  .255450439E-06  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .968274172E-07  .212747170E-06  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    15 :    CONVERGENCE :   0.17E-07
+
+
+ ITERATION  15: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  15 VECT DIF0.38081248E-06 ORB EN DIF0.11288444E-06 EN DIF0.227373675E-12 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .344947821E-07  .130606358E-06  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .339142652E-07  .102763892E-06  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .382707981E-07  .844135936E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .323087761E-07  .531692741E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .339082575E-07  .131726122E-06  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .337213386E-07  .994892267E-07  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .332252483E-07  .872522794E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .331883179E-07  .536375229E-07  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    16 :    CONVERGENCE :   0.70E-08
+
+
+ ITERATION  16: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  16 VECT DIF0.13172612E-06 ORB EN DIF0.38270798E-07 EN DIF0.454747351E-12 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .127540289E-07  .460333923E-07  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .127591626E-07  .345527205E-07  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .137560363E-07  .304524995E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .114141727E-07  .267232958E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .125484476E-07  .464790832E-07  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .127179547E-07  .336780266E-07  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .132090605E-07  .313403052E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .118960592E-07  .278275437E-07  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    17 :    CONVERGENCE :   0.21E-08
+
+
+ ITERATION  17: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  17 VECT DIF0.46479083E-07 ORB EN DIF0.13756036E-07 EN DIF0.000000000E+00 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .420148183E-08  .159670419E-07  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .414307522E-08  .126971995E-07  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .468657646E-08  .108547256E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .393075794E-08  .574287418E-08  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .413029966E-08  .161021887E-07  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .411815648E-08  .122656005E-07  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .401369249E-08  .105970357E-07  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .402600620E-08  .574352532E-08  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    18 :    CONVERGENCE :   0.87E-09
+
+
+ ITERATION  18: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  18 VECT DIF0.16102189E-07 ORB EN DIF0.46865765E-08 EN DIF0.227373675E-12 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .156281743E-08  .561550059E-08  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .155956670E-08  .416070101E-08  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .167496239E-08  .375073972E-08  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .139948497E-08  .359212526E-08  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .153791291E-08  .567044925E-08  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .155516844E-08  .406440195E-08  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .163218772E-08  .385287907E-08  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .146383883E-08  .375232312E-08  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    19 :    CONVERGENCE :   0.26E-09
+
+
+ ITERATION  19: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  19 VECT DIF0.56704492E-08 ORB EN DIF0.16749624E-08 EN DIF0.227373675E-12 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .510723908E-09  .195324831E-08  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .504932984E-09  .157532087E-08  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .574523540E-09  .151371093E-08  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .478053153E-09  .614937688E-09  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .502282660E-09  .196946115E-08  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .501433561E-09  .151893087E-08  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .481861662E-09  .133590872E-08  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .487286655E-09  .599138036E-09  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    20 :    CONVERGENCE :   0.11E-09
+
+
+ ITERATION  20: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  20 VECT DIF0.19694611E-08 ORB EN DIF0.57452354E-09 EN DIF0.227373675E-12 TOT EN -29.3152730    
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  1    1      -1.065727   .191690219E-09  .684506618E-09  NORMAL CONVERGENCE                                       
+  1    2      -0.585579   .190890859E-09  .498269648E-09  NORMAL CONVERGENCE                                       
+  1    3      -0.366808   .203435491E-09  .463777183E-09  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  3    1      -0.360190   .171525016E-09  .501493846E-09  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  5    1      -1.065190   .188919103E-09  .691111224E-09  NORMAL CONVERGENCE                                       
+  5    2      -0.584177   .190354399E-09  .487326762E-09  NORMAL CONVERGENCE                                       
+  5    3      -0.355821   .202525996E-09  .475018636E-09  NORMAL CONVERGENCE                                       
+
+
+ REPR. ORBITAL ENERGY   DIFF(ENERGY)   DIFF(VECTOR)      COMMENTS
+
+  7    1      -0.362579   .180474302E-09  .526057864E-09  NORMAL CONVERGENCE                                       
+
+
+ ITERATION    21 :    CONVERGENCE :   0.33E-10
+
+
+ ITERATION  21: TOTAL ENERGY =        -29.315272972372      
+
+
+
+
+ ITERATION  21 VECT DIF0.69111122E-09 ORB EN DIF0.20343549E-09 EN DIF0.454747351E-12 TOT EN -29.3152730    
+
+
+ PROPERTIES AND EXPECTATION VALUES
+
+ TOTAL ENERGY (WITHOUT BREIT-CORRECTION)             -29.3152729723718    
+
+ NUCLEAR REPULSION ENERGY                             6.84742030287509    
+ TOTAL POTENTIAL ENERGY                              -36.8865881226532    
+ VIRIAL THEOREM 2.*<[V]>/<C*[A.P]>                   -4.87188650723138    
+
+                                                CLOSED SHELL
+
+ ELECTRON REPULSION EN. (WITH C-SHELL)           26.67055257    
+ ONE-ELECTRON ENERGY                            -62.83324584    
+ NUCLEAR-ELECTRON ATTRACTION EN.                -70.40456099    
+ KINETIC ENERGY                                  7.571315150    
+1      PROPERTIES AND EXPECTATION VALUES OF THE ORBITALS
+
+
+ REPRESENTATION E1G  'E1G     
+
+            E(ONE-E)         E(KIN)           E(REP,CLOSE)     E(REP,OPEN)      E(ATTR,NUC)      
+ (  1,  1)    -4.51372821      0.439089830       1.72400068      0.000000000E+00  -4.95281804    
+ (  1,  2)    -3.99436055      0.590477299       1.70439067      0.000000000E+00  -4.58483785    
+ (  1,  3)    -3.61435154      0.416339262       1.62377201      0.000000000E+00  -4.03069080    
+
+ SUM OF   1   -12.1224403       1.44590639       5.05216336      0.000000000E+00  -13.5683467    
+
+
+ REPRESENTATION E2G  'E2G     
+
+            E(ONE-E)         E(KIN)           E(REP,CLOSE)     E(REP,OPEN)      E(ATTR,NUC)      
+ (  3,  1)    -3.58562591      0.433151055       1.61271815      0.000000000E+00  -4.01877697    
+
+ SUM OF   3   -3.58562591      0.433151055       1.61271815      0.000000000E+00  -4.01877697    
+
+
+ REPRESENTATION E1U  'E1U     
+
+            E(ONE-E)         E(KIN)           E(REP,CLOSE)     E(REP,OPEN)      E(ATTR,NUC)      
+ (  5,  1)    -4.51432532      0.441706427       1.72456752      0.000000000E+00  -4.95603175    
+ (  5,  2)    -3.99478830      0.595285470       1.70530584      0.000000000E+00  -4.59007377    
+ (  5,  3)    -3.61618583      0.443548853       1.63018220      0.000000000E+00  -4.05973468    
+
+ SUM OF   5   -12.1252994       1.48054075       5.06005556      0.000000000E+00  -13.6058402    
+
+
+ REPRESENTATION E2U  'E2U     
+
+            E(ONE-E)         E(KIN)           E(REP,CLOSE)     E(REP,OPEN)      E(ATTR,NUC)      
+ (  7,  1)    -3.58325726      0.426059380       1.61033921      0.000000000E+00  -4.00931664    
+
+ SUM OF   7   -3.58325726      0.426059380       1.61033921      0.000000000E+00  -4.00931664    
+
+ Total number of real diagonalisations :               92
+ Total number of complex diagonalisations :             0
+
+ TIMINGS FOR THE VARIOUS ROUTINES
+ Setting up 1-electron files (MFDPOEF):                    0.0350
+ Constructing and extrapolating densities:                 0.6414
+ Constructing Coulomb part of Fock matrix:                 2.0801
+ Constructing Gaunt part of Fock matrix:                   0.0000
+ Completion of skeleton Fock matrix:                       0.2612
+ Diagonalisation of Fock matrix:                           0.8099
+ Property calculation (includes Gaunt):                    0.2196
+ Untimed other routines:                                   0.0434
+
+ TOTAL CPU TIME:   0 HOURS   0 MINUTES   4 SECONDS
+
+        ---  NORMAL END OF RUN ---

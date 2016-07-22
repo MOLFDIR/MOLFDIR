@@ -1,0 +1,30 @@
+C
+      SUBROUTINE RDENS(MCYCL,A,L1,IRP,IOPT)
+      IMPLICIT REAL*8 (A-H,O-Z)
+      COMPLEX*16 A(*)
+C
+      INCLUDE 'paracom.inc'
+      INCLUDE 'general.inc'
+C
+C === THIS ROUTINE READS THE DENSITY MATRIX FROM FILE
+C === IOPT = 1 : READ CLOSED SHELL
+C === IOPT > 1 : READ OPEN SHELL
+C
+      IF (IOPT .EQ. 1) THEN
+        IREC = (MCYCL - 1) * (NDCREC+NDOREC+NDTREC) + INIRP(IRP)
+      ELSE 
+	IF (IOPT .EQ. 2) THEN
+          IREC = (MCYCL - 1) * (NDCREC+NDOREC+NDTREC) + NDCREC + 
+     +           INIRP(16 + IRP)
+	ELSE
+	IF (IOPT .LE. 3) THEN
+	  IREC = (MCYCL-1)*(NDCREC+NDOREC+NDTREC)+NDCREC+NDOREC+
+     +           INIRP(32+IRP)
+        ELSE
+          CALL Q2JOB(6,'RDENS: IOPT CAN ONLY RUN FROM 1 TO 3',' ',1)
+        ENDIF
+        ENDIF
+      ENDIF
+      READ(MFDENSM,REC=IREC) (A(I),I=1,L1)
+      RETURN
+      END

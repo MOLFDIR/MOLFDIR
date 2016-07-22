@@ -1,0 +1,5 @@
+/ options
+/ keywords
+ 'wien' 'unix' 'linux'  'milstd1753' 'falloc' '$format' 
+ 'blas2' 'blas3' 'pipemode'       / flags
+/ filenames #not used in pipemode

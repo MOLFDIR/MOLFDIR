@@ -1,0 +1,24 @@
+
+      SUBROUTINE PMCMMT(NA,M,AR,AI,L,NB,BR,BI,N,NC,CR,CI)
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+      DIMENSION AR(NA,L),AI(NA,L),BR(NB,N),BI(NB,N),CR(NC*(NC+1)/2)
+      DIMENSION CI(NC*(NC+1)/2)
+      IF(M.GT.NA.OR.M.GT.NB.OR.N.GT.L.OR.L.GT.NC.OR.L.NE.N)
+     $CALL Q2JOB(6,'ERROR IN ARGUMENTS P.PMCMMT',' ',0)
+      LL=0
+      DO 30 I=1,L
+      DO 20 K=1,I
+      SUMR=0.0
+      SUMI=0.0
+      DO 10 J=1,M
+      SUMR=SUMR+AR(J,I)*BR(J,K)+AI(J,I)*BI(J,K)
+      SUMI=SUMI+AR(J,I)*BI(J,K)-AI(J,I)*BR(J,K)
+   10 CONTINUE
+      LL=LL+1
+      CR(LL)=SUMR
+      CI(LL)=SUMI
+   20 CONTINUE
+   30 CONTINUE
+      RETURN
+      END

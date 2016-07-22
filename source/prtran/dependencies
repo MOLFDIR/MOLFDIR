@@ -1,0 +1,13 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(expmos.o): molf.inc files.inc sym.inc inpt.inc vecs.inc
+$(lib_program)(getmos.o):  molf.inc files.inc sym.inc inpt.inc vecs.inc
+$(lib_program)(init.o): molf.inc files.inc sym.inc
+$(lib_program)(initc.o): files.inc       
+$(lib_program)(prtran.o): molf.inc files.inc inpt.inc
+$(lib_program)(readin.o): molf.inc sym.inc inpt.inc vecs.inc
+$(lib_program)(transf.o): vecs.inc sym.inc inpt.inc files.inc
+

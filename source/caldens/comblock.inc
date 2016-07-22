@@ -1,0 +1,27 @@
+      COMMON /FILE/ FILENAM
+      COMMON / FLS / MFD1OUT, MFDSYMC, MFDVECA, MFDAVS
+      COMMON / REC / IREC
+      COMMON /SYM/ NREP,IRPDIM(16),ITHIRP(16),IPRTNR(16),IFRSTPT(16)
+      COMMON / SYMI/ NQ1,NEQUIV,NEQCOM,NGAUS,NCOMB,NSYMOP,NNUCL,NSYMF,
+     +               NCOEF,NSYMRP,
+     +               KCOMB(N14),INDBAS(N14+1),INDSYM(N14+1),
+     +               ICENT(N7),ITYPE(N7),
+     +               INDCOM(N7+1),
+     +               INDORB(N12+1),INDB(N12),KSYMRP(N12),LSYMRP(N12),
+     +               KSYMF(N12),
+     +               NBSYM(16),NBSYM1(16),NBSYM2(16),
+     +               NEM(N14+1),NBTOT,NBTOT1
+      COMMON / SYMR/ ZNUC(N1),COAT(N1,3),
+     +               ALPHA(N15),COEFF(N15),
+     +               CTRANAR(N10),CTRANAI(N10),
+     +               CTRANBR(N10),CTRANBI(N10)
+      COMMON /GRIDR/ X0, Y0, Z0, RX (3), RY (3), RZ (3),
+     +               AF (3), AL (3)
+      COMMON /GRIDI/ NDIM, NA (3)
+      COMMON /INP / NOCC(16), NVAL(16), NSKIP1(16),NSKIP2(16),TWOC
+      COMMON /NLM/ NL (N6), NM (N6), NN (N6)
+      COMMON /DENS/ DR (N21), DI (N21)
+      COMMON /OPTIONS/ FORMOUT,USENAT,LOGSCL
+C
+      LOGICAL TWOC,FORMOUT,USENAT,LOGSCL
+      CHARACTER FILENAM*10

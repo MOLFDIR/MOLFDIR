@@ -1,0 +1,21 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+$(lib_program)(ccmain.o):  $(include_files)
+$(lib_program)(ccdriv.o):  $(include_files)
+$(lib_program)(ccfspc.o):  $(include_files)
+$(lib_program)(ccints.o):  $(include_files)
+$(lib_program)(cceqns.o):  $(include_files)
+$(lib_program)(ccintm.o):  $(include_files)
+$(lib_program)(ccgetv.o):  $(include_files)
+$(lib_program)(ccsort.o):  $(include_files)
+$(lib_program)(ccgenp.o):  $(include_files)
+$(lib_program)(ccrpa.o):   $(include_files)
+$(lib_program)(ccxblas.o): $(include_files)
+$(lib_program)(ccpam.o):   $(include_files)
+$(lib_program)(ccgrad.o):  $(include_files)
+$(lib_program)(quit.o):
+$(lib_program)(gpluuk.o):
+$(lib_program)(mempkg.o):

@@ -1,0 +1,11 @@
+#
+# This file contains information on how the individual routines depend 
+# on various include files
+#
+ 
+../..$(lib_program)(falloc.o): extsymbols.h
+../..$(lib_program)(fdate.o): extsymbols.h
+../..$(lib_program)(flushstdout.o): extsymbols.h
+../..$(lib_program)(fwtime.o): extsymbols.h
+../..$(lib_program)(hostnm.o): extsymbols.h
+

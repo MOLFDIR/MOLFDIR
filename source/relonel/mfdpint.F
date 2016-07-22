@@ -1,0 +1,69 @@
+C
+C     ==================
+      SUBROUTINE MFDPINT(II,JJ)
+C     ==================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     CALCULATE IMPULS-INTEGRALS PX,PY,PZ
+C
+      INCLUDE 'paracom.inc'
+C
+      COMMON/INTI/IM,JM,KM,LM,I,J,K,L
+      COMMON/INTR/PXINT,PYINT,PZINT
+C
+      ITYP=ITYPE(I)
+      JTYP=ITYPE(J)
+      NL1=NR(ITYP,1)
+      NL2=NR(JTYP,1)
+      NM1=NR(ITYP,2)
+      NM2=NR(JTYP,2)
+      NN1=NR(ITYP,3)
+      NN2=NR(JTYP,3)
+      ICNT=ICENT(I)
+      JCNT=ICENT(J)
+      AR(1)=XCORD(ICNT)
+      AR(2)=YCORD(ICNT)
+      AR(3)=ZCORD(ICNT)
+      BR(1)=XCORD(JCNT)
+      BR(2)=YCORD(JCNT)
+      BR(3)=ZCORD(JCNT)
+      DSAB=(AR(1)-BR(1))**2+(AR(2)-BR(2))**2+(AR(3)-BR(3))**2
+      T1A=0.
+      T2A=0.
+      T3A=0.
+      A=ALPHA(II)
+      B=ALPHA(JJ)
+      T1=A+B
+      T0=1./T1
+      DISTAB=A*B*T0*DSAB
+      P1=(A*AR(1)+B*BR(1))*T0
+      P2=(A*AR(2)+B*BR(2))*T0
+      P3=(A*AR(3)+B*BR(3))*T0
+      IF(DISTAB.GT.DNORM) GO TO 1635
+      PAX=P1-AR(1)
+      PBX=P1-BR(1)
+      PAY=P2-AR(2)
+      PBY=P2-BR(2)
+      PAZ=P3-AR(3)
+      PBZ=P3-BR(3)
+#if defined (BIT64)
+      SOO=((PI*T0)**1.5)*EXP(-DISTAB)
+#else
+      SOO=((PI*T0)**1.5)*DEXP(-DISTAB)
+#endif
+      T1=OVLAP(NL1,NL2,PAX,PBX,T0)
+      T2=OVLAP(NM1,NM2,PAY,PBY,T0)
+      T3=OVLAP(NN1,NN2,PAZ,PBZ,T0)
+      IF(NL2.NE.0) T1A=OVLAP(NL1,NL2-1,PAX,PBX,T0)
+      T1B=OVLAP(NL1,NL2+1,PAX,PBX,T0)
+      IF(NM2.NE.0) T2A=OVLAP(NM1,NM2-1,PAY,PBY,T0)
+      T2B=OVLAP(NM1,NM2+1,PAY,PBY,T0)
+      IF(NN2.NE.0) T3A=OVLAP(NN1,NN2-1,PAZ,PBZ,T0)
+      T3B=OVLAP(NN1,NN2+1,PAZ,PBZ,T0)
+      PXINT=PXINT+SOO*T2*T3*(NL2*T1A-2.*B*T1B)
+      PYINT=PYINT+SOO*T3*T1*(NM2*T2A-2.*B*T2B)
+      PZINT=PZINT+SOO*T1*T2*(NN2*T3A-2.*B*T3B)
+ 1635 CONTINUE
+  635 CONTINUE
+      RETURN
+      END

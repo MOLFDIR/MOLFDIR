@@ -1,0 +1,77 @@
+C
+C     ==================
+      SUBROUTINE EASYINP
+C     ==================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     IN HONOUR OF H.U.VAN PIGGELEN AND J.TH.VAN MONTFORT THE ORIGINAL
+C     NAMES OF EASYINP AND XYZTRAN ARE RETAINED. THESE TWO ROUTINES
+C     TOGETHER PROVIDE ALL INFORMATION ON THE BEHAVIOR OF THE FUNCTIONS
+C     S,X,Y,Z,X**2,Y**2,Z**2,... AND OTHER INFORMATION AS THE CHARACTERS
+C     OF THE POINTGROUP, FROM ONLY THE SCHOENFLIES SYMBOL OF A GROUP
+C     ORIGINAL VERSION WRITTEN IN 1977 FOR THE SYMOL-PROGRAM BUT COMPLE-
+C     TELY REWRITTEN FOR DOUBBLE-GROUPS IN THIS PROGRAM
+C     ON ENTRY :
+C     GROUPN---SCHOENFLIES SYMBOL FOR POINTGROUP (3-CHARACTER VARIABLE)
+C     ON EXIT :
+C     NREP-----NAMES OF THE REPRESENTATIONS OF THE GROUP(4-CHARACT.VAR)
+C     REPN-----ACCUMULATIVE NAMES OF THE REPRESENTATIONS OF THE GROUP
+C              AND SUBGROUPS IN THE SUBGROUP-CHAIN(14-CHARACTER VARIABLE
+C     OPERN----SYMBOLS REPRESENTING THE GROUP-OPERATIONS(4-CHARACT.VAR)
+C
+      INCLUDE 'paracom.inc'
+C
+      INTEGER XM1FNR,XMATK,FNR,FNRI1,FNRI2,FIND,SIGNF
+C
+      IF1(I) = (I+1)*(I+2)*(I+3)/6-3
+C
+C     -------------------------
+C     GET ALL GROUP-INFORMATION
+C     -------------------------
+C
+      CALL XYZTRAN
+C
+C     --------------------------------------------------------------
+C     THE TRANSFORMATION PROPERTIES OF S-FUNCTIONS ARE VERY SIMPLE :
+C     --------------------------------------------------------------
+C
+      DO 10 I = 1,NSYMOP
+      XMAT(1,I) = 1
+   10 CONTINUE
+C
+      MAXF = N6 - 4
+C
+C     ---------------------------------------------------------
+C     UNPACK THE FUNCTION CODES TO GET POWERS OF X,Y,AND Z
+C     USE TRANSFORMATION OF X,Y,AND Z AND MAKE APPROPRIATE CODE
+C     ---------------------------------------------------------
+C
+      DO 100 IOP = 1,NSYMOP
+      DO 100 FNR = 1,MAXF
+      FIND    = 0
+      NTOT    = 0
+      SIGNF   = 1
+      XM1FNR  = XM1(FNR)
+
+      DO 30 I = 1,3
+      K       = 3 - I
+      IND     = XM1FNR/10**K
+      XMATK   = IABS( XMAT(K+2,IOP) ) - 1
+      SIGNF   = SIGNF*ISIGN(SIGNF,(XMAT(K+2,IOP)**IND))
+      FIND    = FIND + IND*10**(XMATK-1)
+      NTOT    = NTOT + IND
+   30 XM1FNR  = XM1FNR - IND*10**K
+C
+C     ----------------------------------------------------------
+C     LOOP OVER THE NUMBER OF FUNCTIONS WITH EQUAL SUM OF POWERS
+C     TO CONSTRUCT THE ARRAY 'XMAT(I,J)'
+C     ----------------------------------------------------------
+C
+      FNRI1 = IF1(NTOT-1)
+      FNRI2 = IF1(NTOT)-1
+      DO 40 I = FNRI1,FNRI2
+   40 IF ( XM1(I) .EQ. FIND ) GOTO 50
+   50 XMAT(FNR+4,IOP) = (I+4)*SIGNF
+  100 CONTINUE
+      RETURN
+      END

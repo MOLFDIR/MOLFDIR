@@ -1,0 +1,185 @@
+C     =================================================================
+      SUBROUTINE SETINDA(NUC,KGS,NGS,NCOMB,IND,NQV,ICOM,LTYPE,NORB,ICP,
+     &                   NCORB,NCPRIM)
+C     =================================================================
+      IMPLICIT REAL*8 (A-H, O-Z)
+C
+C     GENERATE SYMMETRY EQUIVALENT FUNCTIONS. SYMMETRY EQUIVALENT ARE
+C     THOSE FUNCTIONS OF WHICH THE CENTER AND THE SPATIAL EXTENSION
+C     TOGETHER ARE CONNECTED BY A SYMMETRY OPERATION.
+C     IN ADDITION PRECAUTIONS ARE TAKEN TO ENABLE THE REMOVAL OF FOR
+C     EXAMPLE THE S-COMBINATION FROM THE D-FUNCTIONS. ALSO THE CONNECTED
+C     ARRAY'S ARE UPDATED FOR EACH NEWLY GENERATED FUNCTION IF NECESSARY
+C     MOST VARIABLES IN THE PARAMETERLIST ARE UPDATED ON EXIT
+C     NUC----NUMBER OF THE ACTUAL SYMMETRY-UNIQUE NUCLEAR POSITION
+C     KGS----ACTUAL NUMBER OF THE LAST EXPONENT IN THE EXPONENT-ARRAY
+C            UPDATED ON EXIT TO REFLECT THE NEW SITUATION
+C     NGS----NUMBER OF EXPONENTS OF THE ACTUAL TYPE (LTYPE)
+C     NCOMB--ACTUAL TOTAL NUMBER OF FUNCTIONS IN ALL THE GROUPS OF
+C            SYMMETRY EQUIVALENT FUNCTIONS (I.E. THE SUM OVER ALL
+C            ICOM GROUPS TIMES THE NCOM FUNCTIONS IN THAT GROUP)
+C     IND----SAME AS NCOMB BUT UPDATED IN A DIFFERENT WAY
+C     NQV----TOTAL NUMBER OF SYMMETRY UNIQUE BASISFUNCTIONS IN TERMS
+C            OF CONTRACTED GAUSSIANS (I.E. THE SUM OVER ALL UNIQUE
+C            CENTERS 'NEQNUC' TIMES FOR EACH GROUP OF COMBINATIONS
+C            WHERE THIS CENTER APPEARS, THE NUMBER OF CONTRACTED GAUSS-
+C            IANS OF THE L-TYPE THAT BELONGS TO THIS GROUP)
+C     ICOM---ACTUAL NUMBER OF GROUPS OF SYMMETRY EQUIVALENT FUNCTIONS
+C            THAT HAS ALREADY BEEN CONSTRUCTED
+C     LTYPE--THE L-VALUE OF THE ACTUAL FUNCTIONS, EXTENDED TO INCLUDE
+C            ALL FUNCTIONS WITH EQUAL SUM OF POWERS (X**2,Y**2,Z**2,..)
+C     NORB---SINCE THE NUMBER OF EXPONENTS NEED NOT BE RELATED TO THE
+C            NUMBER OF BASISFUNCTIONS BECAUSE OF CONTRACTION NORB IS
+C            THE ACTUAL NUMBER OF BASISFUNCTIONS CONSTRUCTED FROM THE
+C            ACTUAL NUMBER OF EXPONENTS (=GAUSSIANS : NGS)
+C     NCORB  Number of contracted functions calculated in 2-e integral eval.
+C     NCPRIM Number of primitives to be used in 2-e integral evaluation
+C     (We might skip the evaluation of diffuse (SS|LL) and (SS|SS) ints)
+C
+      INCLUDE 'paracom.inc'
+C
+      INTEGER AOTYP
+      DATA KCO/0/
+      IND=IND+1
+      KND=IND
+      ISTYP=LTYPE*(LTYPE+1)*(LTYPE-1)/6+1
+      IFTYP=LTYPE*(LTYPE+1)*(LTYPE+2)/6
+      NUCIN=INDNUC(NUC)+1
+      ICENT(IND)=NUCIN
+      ITYPE(IND)=ISTYP
+      LCOM=ICOM+1
+      NCOM=1
+      ICT=1
+C
+C     -----------------------------------------------------
+C     LOOP OVER ALL FUNCTION-TYPES WITH EQUAL SUM OF POWERS
+C     -----------------------------------------------------
+C
+      DO 3 IF=ISTYP,IFTYP
+      IFF=IABS(IFN(IF))
+C
+C     ----------------------------------------------------------
+C     SEE IF THIS TYPE IS ALREADY IN THE LIST, GENERATED EARLIER
+C     ----------------------------------------------------------
+C
+      DO 10 I=IND,KND
+      IF (IFF.EQ.ITYPE(I) .AND. NUCIN.EQ.ICENT(I)) GOTO 15
+   10 CONTINUE
+C
+C     ------------------------------------------------------------------
+C     THIS TYPE OF FUNCTION IS NOT SYMMETRY-EQUIVALENT TO ANY IN THE LIS
+C     ------------------------------------------------------------------
+C
+      KND=KND+1
+      IF (KND.GT.N7) CALL Q2JOB(3,'P.SETINDA_ICENT','N7',KND)
+      ICENT(KND)=NUCIN
+      ITYPE(KND)=IFF
+C
+C     --------------------------------------------------------------
+C     SOME TYPES (AS X**2,Y**2,Z**2 ) ARE FORCED TO BE IN ONE GROUP TO
+C     ENABLE THE REMOVAL OF UNWANTED LINEAR COMBINATIONS FROM THE GROUP
+C     LATER (F.E. X**2+Y**2+Z**2 SHOULD BE DELETED FROM THE BASIS)
+C     ----------------------------------------------------------------
+C
+      IF (IFN(IF).LT.0 .AND. FRLCC) THEN
+          NCOM=NCOM+1
+          GOTO 15
+      ENDIF
+      ICOM=ICOM+1
+      INDCOM(ICOM+1)=INDCOM(ICOM)+NCOM
+      NCOM=1
+      ICT=ICT+1
+   15 CONTINUE
+C
+C     -------------------------------------------------------------
+C     GENERATE SYMMETRY-EQUIVALENT FUNCTIONS BY SYMMETRY OPERATIONS
+C     -------------------------------------------------------------
+C
+      DO 2 IOP=1,NSYMOP
+      AOTYP=XMAT(IFF,IOP)
+      NUCCT=NUCOP(NUCIN,IOP)
+C
+C     -----------------------------------------------------------
+C     CHECK WHETHER FUNCTION AOTYP ALREADY EXISTS ON CENTER NUCCT
+C     -----------------------------------------------------------
+C
+      DO 1 I=IND,KND
+    1 IF (IABS(AOTYP).EQ.ITYPE(I) .AND. NUCCT.EQ.ICENT(I)) GOTO 2
+C
+C     ----------------------------------------------------------------
+C     A NEW TYPE-CENTER COMBINATION HAS BEEN FOUND; ADD IT TO THE LIST
+C     ----------------------------------------------------------------
+C
+      KND=KND+1
+      NCOM=NCOM+1
+      IF (KND.GT.N7) THEN
+      CALL Q2JOB(3,'P.SETINDA_ITYPE','N7',KND)
+      ENDIF
+      ITYPE(KND) = IABS(AOTYP)
+      ICENT(KND) = NUCCT
+    2 CONTINUE
+    3 CONTINUE
+      ICOM=ICOM+1
+      INDCOM(ICOM+1)=INDCOM(ICOM)+NCOM
+C
+C     ------------------------------------------------------------
+C     SET UP NEW INDEX ARRAY WHICH IS THE PRODUCT OF THE EFFECT OF
+C     SYMMETRY OPERATIONS ON THE CENTERS(NUCOP) AND THE FUNCTIONS
+C     (XMAT) . THE NEW COMBINED ARRAY IS ICOMOP(.,.)
+C     MEANWHILE FOR THE IMPROPER OPERATIONS (THOSE THAT
+C     CONTAIN THE INVERSION OPERATION) THE SIGN OF THE
+C     FUNCTIONS OF THE SMALL COMPONENT BASIS IS CHANGED
+C     TO REFLECT THE USE OF THE DIRAC BETHA MATRIX AS THE
+C     INVERSION OPERATION. THIS SIGN WILL BE CHANGED ONCE
+C     MORE IMMEDIATELY BEFORE WRITING THIS ARRAY TO FILE
+C     SO THAT IT CAN BE USED LATER IN THE INTEGRAL PROGRAM
+C     ------------------------------------------------------------
+C
+      DO 34 IM=LCOM,ICOM
+      KMD=INDCOM(IM)+1
+      LMD=INDCOM(IM+1)
+      IF(LMD-KMD+1.GE.N3) CALL Q2JOB(3,'P.SETINDA_NCOM','N3',LMD-KMD+1)
+      DO 33 I=KMD,LMD
+      IT=ITYPE(I)
+      IC=ICENT(I)
+      DO 32 IOP=1,NSYMOP
+      ITY=XMAT(IT,IOP)
+      IF (IOP.GE.IFIOP.AND.ICP.EQ.2) ITY=-ITY
+      ICC=NUCOP (IC,IOP)
+      ITT=IABS(ITY)
+      DO 30 J=KMD,LMD
+   30 IF(ITT.EQ.ITYPE(J).AND.ICC.EQ.ICENT(J)) GOTO 31
+      CALL Q2JOB(4,'P.SETINDN_ICOMOP',' ',0)
+   31 ICOMOP(I,IOP)=ISIGN(J,ITY)
+   32 CONTINUE
+   33 CONTINUE
+   34 CONTINUE
+      NCOMB=LMD+1
+C
+C     ----------------------------------------------------------------
+C     EACH ADDITIONAL GROUP OF EQUIVALENT FUNCTIONS NEEDS ITS OWN COPY
+C     OF EXPONENTS AND COEFFICIENTS IN THE ARRAY'S ALPHA AND COEFF
+C     ----------------------------------------------------------------
+C
+      IF ((ICT-1)*NGS+KGS.GT.N15)
+     $CALL Q2JOB(3,'P.SETINDA_ALPHA','N15',(ICT-1)*NGS+KGS)
+      IF (NQV+ICT*NORB.GT.N14)
+     $CALL Q2JOB(3,'P.SETINDA_KCOMB','N14',NQV+ICT*NORB)
+      DO 7 IC=1,ICT
+      IF (IC.EQ.1) GOTO 5
+      IGS=KGS+1
+      KGS=KGS+NGS
+      DO 4 I=IGS,KGS
+      ALPHA(I)=ALPHA(I-NGS)
+    4 COEFF(I)=COEFF(I-NGS)
+    5 KCO=KCO+1
+      DO 6 I=1,NORB
+      INDBAS(NQV+I+1)=INDBAS(NQV+I)+NORBIT(I)
+      INDCPRI(NQV+I)=NCPRIM
+      INDCCON(NQV+I)=NCORB
+      KCOMB(NQV+I)=KCO
+    6 CONTINUE
+    7 NQV=NQV+NORB
+      IND=KND
+      RETURN
+      END
