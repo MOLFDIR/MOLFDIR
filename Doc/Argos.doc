@@ -1,0 +1,859 @@
+ ******************************************************************************
+ 
+                                   DESCRIPTION
+ 
+                                     OF THE
+ 
+                     ARGONNE - OHIO STATE SYMMETRY-ADAPTED,
+                      GENERAL-CONTRACTION INTEGRAL PROGRAM
+                                     (ARGOS)
+ 
+ ******************************************************************************
+ 
+ 
+ PROCEDURE NAME:  ARGOS
+
+
+ DESCRIPTION:  This program evaluates integrals over symmetry-adapted linear
+               combinations of generally contracted gaussian atomic orbitals
+
+
+ INPUT FILE:  ARGOSIN
+ 
+ PRINT OUTPUT FILE:  ARGOSLS
+ 
+ LABELED INTEGRAL FILES:  AOINTS, AOINTS2
+
+
+ DOCUMENTATION:  Russell M. Pitzer
+                 Department of Chemistry              BITNET:
+                 The Ohio State University            TS0775 at OHSTVMA
+                 120 W. 18th Ave.
+                 Columbus, OH 43210
+                 USA
+ 
+
+ LAST REVISION:  11-Sep-91  -rls
+ 
+
+ REFERENCES:  Symmetry analysis (equal contributions),
+              R. M. Pitzer, J. Chem. Phys. 58, 3111 (1973)
+ 
+              AO integral evaluation (HONDO),
+              M. Dupuis, J. Rys, & H. F. King, J. Chem. Phys. 65, 111 (1976)
+ 
+              General contraction of gaussian atomic orbitals,
+              R. C. Raffenetti, J. Chem. Phys. 58, 4452 (1973)
+ 
+              Core potential AO integrals (MELDPS),
+              L. E. McMurchie & E. R. Davidson, J. Comput. Phys. 44, 289 (1981)
+ 
+ 
+ ******************************************************************************
+ 
+                                EXPLANATION OF TERMS
+ 
+ ******************************************************************************
+ 
+  ATOMIC ORBITALS   (AOs)      Cartesian gaussians of the form
+ 
+                                  l  m  n            2
+                               N X  Y  Z  EXP(-ZETA*R )
+ 
+                               where the AO normalization factor, N, is
+                               such that the integrals are normalized to
+ 
+                               (2l-1)!!(2m-1)!!(2n-1)!!
+ 
+                               and where !! denotes the odd number factorial.
+                               This leads to the same normalization factor, N,
+                               for all AOs with the same principal quantum
+                               number.
+ 
+  PRINCIPAL QUANTUM NUMBER     l+m+n+1
+ 
+  AO SETS                      AOs must be included in sets according to the
+                               value of the principal quantum number
+ 
+                               QUANTUM     TYPE    AO SET
+                               NUMBER
+ 
+                                  1        (1s)    1 AO
+ 
+                                  2        (2p)    3 AOs (X,Y,Z)
+                                                           2  2  2
+                                  3        (3d)    6 AOs (X ,Y ,Z ,XY,XZ,YZ)
+                                                           3  3  3  2   2   2
+                                  4        (4f)   10 AOs (X ,Y ,Z ,X Y,X Z,Y X,
+                                                           2   2   2
+                                                          Y Z,Z X,Z Y,XYZ)
+                                                           4  4  4  3   3   3
+                                  5        (5g)   15 AOs (X ,Y ,Z ,X Y,X Z,Y X,
+                                      3   3   3   2 2  2 2  2 2  2    2    2
+                                     Y Z,Z X,Z Y,X Y ,X Z ,Y Z ,X YZ,Y XZ,Z XY)
+ 
+                               If some of the AOs in a set are not desired,
+                               they can be eliminated by omitting appropriate
+                               symmetry orbitals.
+ 
+  SYMMETRY ORBITALS (SOs)      Linear combinations of AOs that transform
+                               according to an irreducible representation.  The
+                               current version of the program can only handle
+                               D2h and its subgroups.
+ 
+  NUCLEAR INTERCHANGE GROUP    Group that describes how the nuclei are
+                               transformed by symmetry operators.  This will
+                               always be the same as, or a subgroup of, the
+                               point group of the molecule.  For example, for
+                               H2O the group is of order 2 and can be
+                               considered to be either Cs or C2.  For C2H4 the
+                               group is of order 4, while for F2 the group is
+                               of order 2.  The group will be the same as the
+                               point group when there are no operators, other
+                               than the identity, whose effect on the nuclei is
+                               the same as that of the identity.
+ 
+  AO REDUCTION SETS            The irreducible representations that make up the
+                               representation formed by a given set of
+                               symmetry-related AOs.  For CH2 with a
+                               (s,p,d/s,p) basis there are five AO reduction
+                               sets:
+ 
+                                  C(s)  -  A1
+                                  C(p)  -  A1+B1+B2
+                                  C(d)  -  A1+A1+A1+A2+B1+B2
+                                  H(s)  -  A1+B2
+                                  H(p)  -  A1+A1+A2+B1+B2+B2
+ 
+  SO TRANSFORMATION MATRICES   Transformation matrices that express the SOs in
+                               terms of a set of AOs.  Each SO transformation
+                               matrix is indexed in data set 9 to an AO
+                               reduction set which defines the symmetries of
+                               the components.
+ 
+  STANDARD SYMMETRY TABLE      ARGOS requires that the first symmetry block be
+                               that of the totally symmetric irreducible
+                               representation, but the other symmetry blocks
+                               can be in any order (the symmetry multiplication
+                               table is specified by the user in data sets 4
+                               and 5).  The transformation, MCSCF, and CI
+                               programs require that the symmetry blocks be
+                               ordered in a manner consistent with a standard
+                               multiplication table:
+ 
+                                              irrep
+                                  * | 1  2  3  4  5  6  7  8
+                                  --|-----------------------
+                                  1 | 1  2  3  4  5  6  7  8
+                               i  2 | 2  1  4  3  6  5  8  7
+                               r  3 | 3  4  1  2  7  8  5  6
+                               r  4 | 4  3  2  1  8  7  6  5
+                               e  5 | 5  6  7  8  1  2  3  4
+                               p  6 | 6  5  8  7  2  1  4  3
+                                  7 | 7  8  5  6  3  4  1  2
+                                  8 | 8  7  6  5  4  3  2  1
+ 
+                               Consistent orderings include
+ 
+                                  C2v:  A1  A2  B1  B2
+                                        z       x   y
+                                            Rz  Ry  Rx
+ 
+                                  D2:   A   B1  B2  B3
+                                            z   y   x
+                                            Rz  Ry  Rx
+ 
+                                  D2h:  Ag  B1g B2g B3g Au  B1u B2u B3u
+                                                            z   y   x
+                                            Rz  Ry  Rx
+ 
+ 
+                               where the suggested transformation properties of
+                               the cartesian coordinates and of the components
+                               of angular momentum are indicated as well.
+                               These imply the orientation of the coordinate
+                               axes with respect to the symmetry elements.
+                               CIDBG, the spin-orbit CI program, requires the
+                               above angular momentum transformation
+                               properties.  For future reference, the above
+                               multiplication table is isomorphic to the 
+                               binary exclusive-or table of the numbers 0 to 7.
+ 
+ ******************************************************************************
+ 
+                                   INPUT DATA
+ 
+ ******************************************************************************
+ 
+   The input is list directed except where a FORMAT statement is given.  It is
+   recommended that a / be put at the end of each input record, as is done on
+   line 2 and many other lines in the sample input data sets, in order to 
+   allow for future extensions.
+ 
+   1)     TITLE(1)
+          FORMAT(A80)
+ 
+ 
+   2)     NGEN, NS, NAORDS, NCONS, NGCS, ITOL, ICUT, AOINTS, ONLY1E, 
+          INRM, NCRS, L1REC, L2REC, AOINT2, FSPLIT
+ 
+ 
+   3)     NST, ( ND(I), ITYP(I), I = 1, NST )
+          FORMAT(I3,12(I3,A3))
+ 
+ 
+   4)     NDPT
+ 
+
+   5)     DO I=1,NDPT
+             P1(I), P2(I), P3(I)
+          ENDDO
+ 
+
+   6)     DO I = 1, NAORDS
+             NREP(I), ( IREP(J), J = 1, NREP(I) )
+          ENDDO
+ 
+ 
+   7)     DO I = 1, NGCS
+             ICSU(I), ICTU(I), IAORDS(I)
+             DO J = 1, ICSU(I)
+                ( ISOCOEF(K,J), K = 1, ICTU(I) )
+             ENDDO
+          ENDDO
+ 
+ 
+   8)     DO I = 1, NCONS
+             ICONU(I), LMNP1(I), NRCR(I)
+             DO J = 1, ICONU(I)
+                ZET(J,I), ( ETA(K,J,I), K = 1, NRCR(I) )
+             ENDDO
+          ENDDO
+ 
+
+   9)     IF ( NCRS .NE. 0 ) THEN
+             DO ICRS = 1, NCRS
+                LCRU, LLSU
+                IF ( LCRU .GE. 0 ) THEN
+                   DO L = 0, LCRU
+                      NBFCR
+                      DO K = 1, NBFCR
+                         NCR(K), ZCR(K), CCR(K)
+                      ENDDO
+                   ENDDO
+                ENDIF
+                IF ( LLSU .GE. 1 ) THEN
+                   DO L = 1, LLSU
+                      NBFCR
+                      DO K = 1, NBFCR
+                         NCR(K), ZCR(K), CCR(K)
+                      ENDDO
+                   ENDDO
+                ENDIF
+             ENDDO
+          ENDIF
+ 
+ 
+  10)     DO IS = 1, NS
+             MTYPE(IS), NF(IS), NC(IS), CHG(IS)
+             FORMAT(A3,2I3,F3.0)
+             DO J = 1, NC
+                X(J), Y(J), Z(J)
+             ENDDO
+             IF( NC(IS) .NE. 1 ) THEN
+                DO J = 1, NGEN
+                   ( IGEN(K,J), K = 1, NC )
+                ENDDO
+             ENDIF
+             DO J = 1, NF
+                MCONS(J), IGCS(J)
+             ENDDO
+             IF ( NCRS .NE. 0 ) THEN
+                MCRS(IS)
+             ENDIF
+          ENDDO
+ 
+
+  11)     DO I = 2, 4
+             TITLE(I)
+             IF ( TITLE(I) .EQ. ' ' ) EXIT
+          ENDDO	
+
+ ******************************************************************************
+ 
+                                EXPLANATION OF DATA
+ 
+ ******************************************************************************
+ 
+   1)     TITLE               This should include the name of the molecule and
+                              basis set and geometry information; it is used to
+                              label data sets used in all subsequent programs.
+ 
+ 
+   2)     NGEN                Number of symmetry operators (on nuclei) to be
+                              read in.  Only the generators are required
+ 
+          NS                  Number of symmetry-distinct types of atoms
+ 
+          NAORDS              Number of AO reduction sets.  Usually there will
+                              be one AO reduction set for each class of
+                              function (s,p,d,...) on each symmetry-distinct
+                              atom.  Other atoms can use the same AO reduction
+                              set.
+ 
+          NCONS               Number of sets of exponents and contraction
+                              coefficients to be read in.  All of the
+                              contraction coefficients for a given set of
+                              primitives are contained in one set.  For
+                              p,d,... functions, all components (x,y,z etc.)
+                              are in one set.
+ 
+          NGCS                Number of transformation matrices relating AOs to
+                              SOs to be read in.  Usually this will be the same
+                              as the number of AO reduction sets.
+ 
+          ITOL                AO integrals with overlap exponential factors
+                              less than 10**(-ITOL) will be omitted.  The
+                              default is 20.
+ 
+          ICUT                Both AO and SO integrals with values less than
+                              10**(-ICUT) will be omitted.  The default is 9.
+ 
+          AOINTS              Unit number for output integral file.  The
+                              default is 4, the default name is 'aoints'.
+ 
+          ONLY1E              0 to compute both 1-e and 2-e integrals.
+                              1 to compute only 1-e integrals (note, FSPLIT=2
+                              is also required in this case. see below.) This
+                              is used for cases in which a set of 2-e integrals
+                              is associated with several sets of 1-e integrals.
+                              Examples include external fields, the use of
+                              point charges to simulate a changing environment,
+                              and the computation of basis set superposition
+                              errors.  The default is 0.
+ 
+          INRM                Set to 1 for symmetry orbitals normalized with
+                              respect to one-center integrals.
+ 
+          NCRS                Number of distinct sets of expansions for core
+                              and spin-orbit potentials
+
+          L1REC               Maximum record length to use for the 1-e 
+                              integral records.  The default value is -1
+                              which invokes the SIFS value.  A value of 0
+                              invokes the ARGOS default value of 4096.
+
+          L2REC               Maximum record length to use for the 2-e
+                              integral records.  The default value is -1.
+                              A value of 0 invokes the ARGOS default.
+ 
+          AOINT2              Unit number for the 2-e integral file.  Accessed
+                              only if ONLY1E=0 and FSPLIT=2.  The default unit
+                              is 8, the default filename is 'aoints2'.
+
+          FSPLIT              File split parameter. FSPLIT=1 forces both
+                              1-e and 2-e integrals to be written to the same
+                              file, AOINTS.  FSPLIT=2 causes the 2-e integrals
+                              to be written to the separate AOINT2 file.  The
+                              default value is 2.
+
+
+   3)     NST                 Number of irreducible representations
+ 
+          ND(I)               Degeneracy of the Ith irreducible representation
+                              (must be 1 in this version of the program)
+ 
+          ITYP(I)             Label for the Ith irreducible representation
+
+
+   4)     NDPT                Number of distinct products of irreducible
+                              representations to be read in.  Do not include
+                              any products involving the totally symmetric
+                              irreducible representation.  It is 0 for C1, C2,
+                              Cs, Ci; 1 for C2v, D2, C2h; 7 for D2h.
+                              If NDPT<0, then P1,P2,P3 values consistent with 
+                              the standard 8x8 multiplication table are 
+                              generated internally.
+ 
+ 
+   5)     P1(I),P2(I),P3(I)   Numbers corresponding to irreducible
+                              representations as defined in data set 3 such
+                              that P1 X P2 = P3.  For C2v, D2, and C2h, these
+                              must be 2 3 4 (in any order).  See example 1 for
+                              D2h.
+                              These records are read only if NDPT>0.
+ 
+ 
+   6)     NREP(I)             Number of irreducible representations in the Ith
+                              AO reduction set
+ 
+          IREP(J)             List of the irreducible representations in the
+                              Ith AO reduction set
+ 
+ 
+   7)     ICSU(I)             Number of SOs in the Ith set of SO coefficients
+ 
+          ICTU(I)             Number of AOs in the Ith set of SO coefficients
+ 
+          IAORDS(I)           Index of the AO reduction set corresponding to
+                              the Ith set of SO coefficients
+ 
+          ISOCOEF(K,J)        The coefficient of the Kth AO in the Jth SO of
+                              this set.  The input values have the sign of the
+                              desired SO coefficient but the magnitude is equal
+                              to the square of the coefficient.  This allows
+                              the coefficients for almost all point groups to
+                              be expressed in integer form.
+ 
+ 
+   8)     ICONU(I)            Number of primitives in the Ith contraction set
+ 
+          LMNP1(I)            Principal quantum number for the Ith contraction
+                              set (1 for 1s, 2 for 2p, 3 for 3d, etc.)
+ 
+          NRCR(I)             Number of contractions in the Ith contraction set
+ 
+          ZET(J,I)            Exponent of the Jth primitive in the Ith
+                              contraction set
+ 
+          ETA(K,J,I)          Contraction coefficient of the Jth primitive in
+                              the Kth contraction in the Ith contraction set.
+ 
+
+   9)     LCRU                l value for the first type of shell not included
+                              in core (maximum value = 4)
+ 
+          LLSU                Highest l value for shells with spin-orbit
+                              potentials (maximum value = 3)
+ 
+          NBFCR               Number of functions in potential expansion
+                                                               2
+          NCR(K)              n value for expansion function, R (V-ZCORE/R)
+                              form
+ 
+          ZCR(K)              Exponent for expansion function
+ 
+          CCR(K)              Coefficient for expansion function.
+ 
+                              Expansions in order: V(l=LCRU), V(s)-V(l=LCRU),
+                              V(p)-V(l=LCRU),... for core; V(p), V(d), ...,
+                              V(l=LLSU) for spin-orbit
+ 
+ 
+  10)     MTYPE(IS)           Label for the Ith type of symmetry-distinct atom
+ 
+          NF(IS)              Number of AO sets for each of these atoms
+ 
+          NC(IS)              Number of symmetry-related atoms of the Ith type
+ 
+          CHG(IS)             Charge on the Ith type of atom (do not include
+                              core charge if core potentials are used)
+ 
+          X(J),Y(J),Z(J)      Coordinates (a.u.) for the Jth atom of this type
+ 
+          IGEN(K,J)           The effect the Jth generator of the nuclear
+                              interchange group has on the Kth atom of this
+                              type.  A 2-fold rotation would be represented by
+                                         2 1
+                              It is always assumed the starting order is
+                                         1 2 .....
+ 
+          MCONS(J)            Index of the Jth contraction set to be placed on
+                              all atoms of this type
+ 
+          IGCS(J)             Index of the Jth set of SO coefficients to be
+                              applied to the Jth contraction set.
+ 
+          MCRS(IS)            Index for the core and spin-orbit expansion set
+ 
+ 
+ ******************************************************************************
+ 
+                              PROGRAM OPERATION
+ 
+ ******************************************************************************
+ 
+ 
+    REDIMENSIONING:
+ 
+                All dimensions are set in ARGOS and SEG1MN, as explained by
+           comment cards there.  The following are the quantities involved:
+ 
+    MSUP   Maximum number of symmetry-inequivalent types of atoms
+    MSTUP  Maximum number of irreducible representations
+    MRCRUP Maximum number of contractions in a contraction set
+    MCONUP Maximum number of primitives in a contraction set
+    MCUP   Maximum number of symmetry-equivalent atoms
+    KAORDP Maximum number of AO reduction sets
+    MCONSP Maximum number of contraction sets
+    MGCSUP Maximum number of SO transformation sets
+    MRUP   Maximum number of irreducible representations in an AO reduction set
+    MCSUP  Maximum number of SOs in a transformation matrix
+    MCTUP  Maximum number of AOs in a transformation matrix
+    MCRUP  Maximum number of expansion functions for potentials
+    MSFUP  Maximum number of function sets
+    MGUP   Maximum number of operators in the nuclear interchange group
+    MSFRUP Maximum number of SOs
+    MNRUP  Maximum number of charge distributions from a pair of function sets
+    MCCUP  Maximum number of symmetry-unique center combinations for 4 types
+                of atoms
+    MBLUP  Maximum amount of work space for SO matrices, products of SO
+                coefficients, and integral arrays
+ 
+                Messages are printed if dimensions are exceeded; most are set
+           to fairly high values and only rarely need to be changed.  If a
+           message is printed, look for PARAMETER statement(s) in ARGOS and
+           SEG1MN containing the variable name printed.
+ 
+    SEGMENTING (overlaying):
+ 
+                The program can be run in a simple segmented form (one-electron
+           code, then two-electron code):
+ 
+       Cray(ctss) SEGMENTING:
+          mo=full,ml=tstmap,x=xargos
+          bin=(oargos1,oargos2,oargos3,oargos4,oargos5,oargos6)
+          tree
+          root(one,two)
+          endtree
+          segment root
+          modules=(main,argos,rt123,root4,root5)
+          segment one
+          modules=seg1mn
+          segment two
+          modules=twoint
+          endseg
+ 
+       FPS APLINK4 overlaying:
+          ARGOS;
+          (OV1:SEG1MN;
+          OV2:TWOINT;)
+
+ VMS: On VAX VMS computers, all filenames are translated using the standard
+ logical name tables.  If ARGOS is defined as a foreign command with the
+ VMS DCL statement "DEFINE ARGOS:==$DEVICE:[DIRECTORY]ARGOS.EXE" (the $ is
+ important), then the workspace memory may be set from the command line. For
+ example,
+
+       $ ASSIGN MY_DEVICE:[MY.DIRECTORY]MY_AOINTS.DAT     AOINTS
+       $ ARGOS /M=50000
+
+ would cause argos to use the indicated device and filename instead of the
+ default []AOINTS.DAT file in the default directory.  Argos would only use
+ 50000 REAL*8 words of workspace, allocated from a blank common pool, instead
+ of the usual default value.  The maximum allowable value is determined by
+ the dimensioned size of the blank common pool.
+
+ Unix: On unix computers, all filenames are translated using the process
+ environment variables.  Upper-case variables only are valid matches.
+ Workspace size may be set from the command line using "-M nnnnnn".  Both upper
+ and lower case "M" are valid.  For example, from the Bourne shell:
+
+      $ AOINTS=my/directory/my_aoints  $COLUMBUS/argos.x -m 50000
+
+ or
+      $ AOINTS=my/directory/my_aoints
+      $ export AOINTS
+      $ $COLUMBUS/argos.x -m 50000
+
+ or from the C shell:
+
+      % setenv AOINTS my/directory/my_aoints
+      % $COLUMBUS/argos.x -m 50000 
+
+ causes the integral file to be redirected and the workspace size to be
+ set as indicated.  On unix machines, there is no upper limit on the
+ workspace allocated imposed by argos; invalid requests result in a nonzero
+ return status.
+
+PARALLEL EXECUTION: On unix machines, ARGOS may be prepared to run in
+a parallel message-passing environment.  In this mode of execution,
+the output filenames, argosls, aoints, and aoints2 are all appended
+with a 3-digit parallel process number (e.g. argosls_000, argosls_001,
+etc.).  FSPLIT=2 is required in this mode.  A simple deterministic
+distribution of the workload is used to distribute the effort across
+several CPUs or across a heterogeneous network of machines.  The
+TCGMSG library and documentation should be consulted for details.  The
+TCGMSG library may be obtained using anonymous FTP from
+ftp.tcg.anl.gov.  See the directory $COLUMBUS/source/p_argos for more
+information and for sample test cases.
+ 
+ ******************************************************************************
+ 
+                                   NOTES
+ 
+ ******************************************************************************
+ 
+      ARGOS was written at Argonne National Laboratory and Ohio State
+ University in 1982 and 1983 with help from R. L. Shepard.  It was based on
+ I94720, a corresponding program for segmented contractions, which was written
+ in 1979 at the National Resource for Computation in Chemistry with support
+ from the H. F. Schaefer group at the University of California, Berkeley.
+ I94720, in turn, was based on SAINT (I43210).  Core-potential and spin-orbit
+ integrals were added to ARGOS in 1983 and 1984 at Lawrence Livermore National
+ Laboratory with help from N. W. Winter.
+ 
+      Support has been provided by the above institutions, the Department of
+ Energy, the National Science Foundation, and Cray Research, Inc.
+ 
+      Some subroutines for primitive AO integral evaluation were provided from
+ the HONDO and MELDPS systems (see REFERENCES) and have been modified to
+ varying degrees.
+ 
+      Distribution of this program is handled primarily through Argonne
+ National Laboratory as part of the COLUMBUS system of programs.  Contact
+ shepard@tcg.anl.gov or SHEPARD at ANLCHM.BITNET.
+ 
+ *******************************************************************
+ 
+    The computer program described here contains work performed partially 
+    by the Argonne National Laboratory Theoretical Chemistry Group under
+    the auspices of the Office of Basic Energy Sciences,
+    Division of Chemical Sciences, U.S. Department of Energy,
+    under contract W-31-109-ENG-38.
+ 
+    These programs may not be (re)distributed without the
+    written consent of the Argonne Theoretical Chemistry Group.
+ 
+    Since these programs are under development, correct results
+    are not guaranteed.
+ 
+ *******************************************************************
+ 
+ 
+ ******************************************************************************
+ 
+                              SAMPLE DATA SETS
+ 
+ ******************************************************************************
+ 
+ EXAMPLE 1.  This data set is for F2 using D2h symmetry.  Note that there is
+ only one nuclear interchange operator.  For D2h, 7 irrep products need to be
+ specified; the ones given here are consistent with the standard 8x8
+ multiplication table.  The basis set is generally contracted and omits the 3s
+ combination of cartesian d orbitals, the 4p combination of cartesian
+ f orbitals, and the 5s and 5d combinations of cartesian g orbitals.
+ 
+ F2 R=2.7       BASIS SET: Correlation Consistent pVQZ (5s, 4p, 3d, 2f, 1g)
+  1  1  5  5  5 20 15  0  0  1 / !NGEN,NS,NAORDS,NCONS,NGCS,ITOL,ICUT,,,INRM
+  8  1ag   1b1g  1b2g  1b3g  1au   1b1u  1b2u  1b3u
+  7  / !No. of irrep products
+  2  3  4  / !S1 = S2xS3
+  2  5  6
+  2  7  8
+  3  5  7
+  3  6  8
+  4  5  8
+  4  6  7  / !7 irrep products required for D2h
+  2  1  6  / !Length, list of irreps (s set)
+  6  8  7  6  3  4  1  / !(p set)
+ 10  1  1  2  3  4  6  6  5  8  7/ !(d set)
+ 14  1  1  2  3  3  4  4  5  6  6  7  7  8  8/ !(f set)
+ 18  1  1  1  2  3  4  2  3  4  6  6  6  5  8  7  5  8  7  / !(g set)
+  2  2  1  / !No. of SOs, No. of AOs, AO set index (s set)
+  1  1     / !AO to SO transformation (s set)
+  1 -1     /
+  6  6  2  / !No. of SOs, No. of AOs, AO set index (p set)
+  1  0  0  1  0  0  / !AO to SO transformation (p set)
+  0  1  0  0  1  0  /
+  0  0  1  0  0  1  /
+  1  0  0 -1  0  0  /
+  0  1  0  0 -1  0  /
+  0  0  1  0  0 -1  /
+ 10 12  3  / !No. of SOs, No. of AOs, AO set index (d set)
+  1  1 -4  0  0  0  1  1 -4  0  0  0  / !AO to SO transformation (d set)
+  1 -1  0  0  0  0  1 -1  0  0  0  0  /
+  0  0  0  1  0  0  0  0  0  1  0  0  /
+  0  0  0  0  1  0  0  0  0  0  1  0  /
+  0  0  0  0  0  1  0  0  0  0  0  1  /
+  1  1 -4  0  0  0 -1 -1  4  0  0  0  /
+  1 -1  0  0  0  0 -1  1  0  0  0  0  /
+  0  0  0  1  0  0  0  0  0 -1  0  0  /
+  0  0  0  0  1  0  0  0  0  0 -1  0  /
+  0  0  0  0  0  1  0  0  0  0  0 -1  /
+ 14 20  4  / !No. of SOs, No. of AOs, AO set index (f set)
+  0  0  4  0 -9  0 -9  0  0  0  0  0 -4  0  9  0  9  0  0  0  / !(f set)
+  0  0  0  0  1  0 -1  0  0  0  0  0  0  0 -1  0  1  0  0  0  /
+  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0 -1  /
+  4  0  0  0  0 -9  0 -9  0  0 -4  0  0  0  0  9  0  9  0  0  /
+  0  0  0  0  0  1  0 -1  0  0  0  0  0  0  0 -1  0  1  0  0  /
+  0  4  0 -9  0  0  0  0 -9  0  0 -4  0  9  0  0  0  0  9  0  /
+  0  0  0  1  0  0  0  0 -1  0  0  0  0 -1  0  0  0  0  1  0  /
+  0  0  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0  1  /
+  0  0  4  0 -9  0 -9  0  0  0  0  0  4  0 -9  0 -9  0  0  0  /
+  0  0  0  0  1  0 -1  0  0  0  0  0  0  0  1  0 -1  0  0  0  /
+  0  4  0 -9  0  0  0  0 -9  0  0  4  0 -9  0  0  0  0 -9  0  /
+  0  0  0  1  0  0  0  0 -1  0  0  0  0  1  0  0  0  0 -1  0  /
+  4  0  0  0  0 -9  0 -9  0  0  4  0  0  0  0 -9  0 -9  0  0  /
+  0  0  0  0  0  1  0 -1  0  0  0  0  0  0  0  1  0 -1  0  0  /
+ 18 30  5  / !No. of SOs, No. of AOs, AO set index (g set)
+   1   1   1   0   0   0   0   0   0  -9  -9  -9   0   0   0
+   1   1   1   0   0   0   0   0   0  -9  -9  -9   0   0   0  /
+  -1  -1   4   0   0   0   0   0   0 144 -36 -36   0   0   0
+  -1  -1   4   0   0   0   0   0   0 144 -36 -36   0   0   0  /
+   1  -1   0   0   0   0   0   0   0   0 -36  36   0   0   0
+   1  -1   0   0   0   0   0   0   0   0 -36  36   0   0   0  /
+   0   0   0  -1   0  -1   0   0   0   0   0   0   0   0  36
+   0   0   0  -1   0  -1   0   0   0   0   0   0   0   0  36  /
+   0   0   0   0  -1   0   0  -1   0   0   0   0   0  36   0
+   0   0   0   0  -1   0   0  -1   0   0   0   0   0  36   0  /
+   0   0   0   0   0   0  -1   0  -1   0   0   0  36   0   0
+   0   0   0   0   0   0  -1   0  -1   0   0   0  36   0   0  /
+   0   0   0   1   0  -1   0   0   0   0   0   0   0   0   0
+   0   0   0   1   0  -1   0   0   0   0   0   0   0   0   0  /
+   0   0   0   0   1   0   0  -1   0   0   0   0   0   0   0
+   0   0   0   0   1   0   0  -1   0   0   0   0   0   0   0  /
+   0   0   0   0   0   0   1   0  -1   0   0   0   0   0   0
+   0   0   0   0   0   0   1   0  -1   0   0   0   0   0   0  /
+   1   1   1   0   0   0   0   0   0  -9  -9  -9   0   0   0
+  -1  -1  -1   0   0   0   0   0   0   9   9   9   0   0   0  /
+  -1  -1   4   0   0   0   0   0   0  144 -36 -36  0   0   0
+   1   1  -4   0   0   0   0   0   0 -144  36  36  0   0   0  /
+   1  -1   0   0   0   0   0   0   0   0 -36  36   0   0   0
+  -1   1   0   0   0   0   0   0   0   0  36 -36   0   0   0  /
+   0   0   0  -1   0  -1   0   0   0   0   0   0   0   0  36
+   0   0   0   1   0   1   0   0   0   0   0   0   0   0 -36  /
+   0   0   0   0  -1   0   0  -1   0   0   0   0   0  36   0
+   0   0   0   0   1   0   0   1   0   0   0   0   0 -36   0  /
+   0   0   0   0   0   0  -1   0  -1   0   0   0  36   0   0
+   0   0   0   0   0   0   1   0   1   0   0   0 -36   0   0  /
+   0   0   0   1   0  -1   0   0   0   0   0   0   0   0   0
+   0   0   0  -1   0   1   0   0   0   0   0   0   0   0   0  /
+   0   0   0   0   1   0   0  -1   0   0   0   0   0   0   0
+   0   0   0   0  -1   0   0   1   0   0   0   0   0   0   0  /
+   0   0   0   0   0   0   1   0  -1   0   0   0   0   0   0
+   0   0   0   0   0   0  -1   0   1   0   0   0   0   0   0  /
+   12    1    5  / !No. primitives, PQN, No. contracted fct. (s set)
+    74530.         0.000095  -0.000022      0.0        0.0        0.0
+    11170.         0.000738  -0.000172      0.0        0.0        0.0
+     2543.         0.003858  -0.000891      0.0        0.0        0.0
+      721.0        0.015926  -0.003748      0.0        0.0        0.0
+      235.9        0.054289  -0.012862      0.0        0.0        0.0
+       85.60       0.149513  -0.038061      0.0        0.0        0.0
+       33.55       0.308252  -0.086239      0.0        0.0        0.0
+       13.93       0.394853  -0.155865      0.0        0.0        0.0
+        5.915      0.211031  -0.110914      0.0        0.0        0.0
+        1.843      0.017151   0.298761   1.000000      0.0        0.0
+        0.7124    -0.002015   0.585013      0.0     1.000000      0.0
+        0.2637     0.000869   0.271159      0.0        0.0     1.000000
+    6    2    4  / !No. primitives, PQN, No. contracted fct. (p set)
+       80.39       0.006347      0.0        0.0        0.0
+       18.63       0.044204      0.0        0.0        0.0
+        5.694      0.168514      0.0        0.0        0.0
+        1.953      0.361563   1.000000      0.0        0.0
+        0.6702     0.442178      0.0     1.000000      0.0
+        0.2166     0.243435      0.0        0.0     1.000000
+    3    3    3  / !No. primitives, PQN, No. contracted fct. (d set)
+        5.014      1.000000      0.0        0.0
+        1.725         0.0     1.000000      0.0
+        0.586         0.0        0.0     1.000000
+    2    4    2  / !No. primitives, PQN, no. contracted fct. (f set)
+        3.562      1.000000      0.0
+        1.148         0.0     1.000000
+    1    5    1  / !No. primitives, PQN, No. contracted fct. (g set)
+        2.376      1.000000
+  F  5  2  9.  / !Symbol, No. AO sets, No. related atoms, Nuc. charge
+  0.000000  0.000000  0.000000
+  0.000000  0.000000  2.70      / !Coordinates for the related atoms
+  2  1  / !Result of the generator on the nuclei
+  1  1  / !Index of contraction set, Index of SO set for this atom set
+  2  2
+  3  3
+  4  4
+  5  5
+ 
+ 
+ 
+ 
+ 
+ EXAMPLE 2.  This example is for methylene with C2v symmetry.  One irrep
+ product is required.  Because methylene is planar, there is only one nuclear
+ interchange generator.  The 3s combination of cartesian d orbitals is
+ included.  An effective core potential and a spin-orbit operator for the
+ carbon atom are used.
+ 
+ CH2  (4s5p1d/5s1p)-->(2s2p1d/3s1p)  (1.09A, 80)
+  1  2  5  7  5  0  0  0  0  1  1 /
+  4  1a1   1a2   1b1   1b2 / Irrep labels
+  1
+  4  3  2 / Irrep product
+  1  1
+  3  1  3  4
+  6  1  1  1  2  3  4
+  2  1  4
+  6  1  1  2  3  4  4
+  1  1  1 / C s orbitals
+  1
+  3  3  2 / C p orbitals
+  0  0  1
+  1  0  0
+  0  1  0
+  6  6  3 / C d orbitals
+  1  1  1  0  0  0 / 3s combination of cartesian d orbitals
+  1  1 -4  0  0  0
+  1 -1  0  0  0  0
+  0  0  0  1  0  0
+  0  0  0  0  1  0
+  0  0  0  0  0  1
+  2  2  4 / H s orbitals
+  1  1
+  1 -1
+  6  6  5 / H p orbitals
+  0  0 -1  0  0 -1
+  0 -1  0  0  1  0
+  1  0  0 -1  0  0
+  1  0  0  1  0  0
+  0  0 -1  0  0  1
+  0 -1  0  0 -1  0
+  4  1  2 /
+   25.030520     -0.0107583     0.0        /
+    3.357825     -0.1374182     0.0        /
+    0.483314      0.5771984     0.0        /
+    0.151774      0.5349547     1.0        /
+  5  2  2 /
+   18.477038      0.0143242     0.0        /
+    4.076157      0.0883853     0.0        /
+    1.185513      0.2920257     0.0        /
+    0.379641      0.4999565     0.0        /
+    0.120413      0.3408323     1.0        /
+  1  3  1 /
+    0.75          1.0        /
+  3  1  1 /
+   33.64          0.02537400 /
+    5.058         0.18968400 /
+    1.147         0.85293300 /
+  1  1  1 /
+    0.3211        1.0        /
+  1  1  1 /
+    0.1013        1.0        /
+  1  2  1 /
+    1.0           1.0        /
+  1  1
+  3 / C p core potential
+  1   51.6159       -1.434846 /
+  2   18.0668       -4.074550 /
+  2    5.3528       -0.559313 /
+  4 / C s-p core potential
+  0   12.2112        3.037970 /
+  1    6.2707       -4.675364 /
+  2    4.1732       71.589258 /
+  2    3.8191      -47.098215 /
+  3 / C p spin-orbit operator
+  1   51.6159        0.028402 /
+  2   18.0668       -0.005600 /
+  2    5.3528        0.004248 /
+ C   3  1  4 / Nuc. charge reduced because of core potential
+    0.0           0.0           0.0       /
+  1  1
+  2  2
+  3  3
+  1 / Core, spin-orbit potential index
+ H   4  2  1
+    0.0           1.32401540    1.57790010 /
+    0.0          -1.32401540    1.57790010 /
+  2  1 / Nuclear interchange generator
+  4  4
+  5  4
+  6  4
+  7  5
+  0 / No core, spin-orbit potential
