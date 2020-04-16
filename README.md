@@ -36,12 +36,10 @@ properties. Also our coupled-cluster code relccsd.x can perform linear
 response calculations using RPA.
 We do NOT have a general integral code to compute the various property 
 integrals. In order to compute various properties you need to have access
-to the DIRAC code from the quantum chemistry of the university of Olso. 
+to the DIRAC code (http://diracprogram.org). 
 When properties is set to .true. in the molfdir.x input, molfdir.x will
 produce input files for the DIRAC code which then will compute the required
 integrals.
-At present the code is maintained in Denmark: http://dirac.chem.sdu.dk/
-
 
 Input description :
 An input description of the package can be found in the directory 
